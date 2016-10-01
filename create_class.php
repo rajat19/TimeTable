@@ -3,7 +3,7 @@
 		<section>
 			<div class="row">
 		        <div class="col s12 m8 offset-m2">
-		          <div class="card">
+		          <div class="card z-depth-3">
 		            <div class="card-content">
 		            <span class="card-title">Create Class Time Table</span>  
 		            	<form>
@@ -80,8 +80,8 @@
 		            	</form>
 		            		<div class="row">
 						    	<div class="input-field col s12">
-						    		<button class="btn waves-effect waves-light cyan darken-1" id="createclass" name="action">Submit
-										<i class="material-icons right">send</i>
+						    		<button class="btn waves-effect waves-light red lighten-1" id="createclass" name="action">Submit
+										<span><i class="fa fa-send"></i></span>
 									</button>
 						    	</div>
 						    </div>
@@ -98,7 +98,7 @@
 		var slot_id = $('#slot_id').val();
 		var faculty_id = $('#faculty_id').val();
 		var subject_id = $('#subject_id').val();
-		console.log(lab_id+"/"+class_id+"/"+day+"/"+slot_id+"/"+faculty_id+"/"+subject_id);
+		console.log(class_id+"/"+day+"/"+slot_id+"/"+faculty_id+"/"+subject_id);
 		$.post("ajax/create_class.php",
 		{
 			class_id: class_id,

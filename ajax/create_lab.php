@@ -34,7 +34,7 @@ if(!$ff11) $msg .= "$faculty_name1 is not available for duration $slot_name1\n";
 if(!$ff21) $msg .= "$faculty_name2 is not available for duration $slot_name1\n";
 if($lf1 && $cf1 && $ff11 && $ff21)
 	$q1 = $queries->addTimeTableLab($conn, $class_id, $batch, $lab_id, $day, $slot_id1, $faculty_id1, $faculty_id2, $subject_id);
-if($chk2 && $q1==1) {
+if($chk2=="true" && $q1==1) {
 	$slot_id2 = htmlentities($_POST['slot_id2']);
 	$slot2 = $queries->getSlotById($conn, $slot_id2)->fetch_assoc();
 	$slot_name2 = $slot2['start']." to ".$slot2['end'];
@@ -49,7 +49,7 @@ if($chk2 && $q1==1) {
 	if($lf2 && $cf2 && $ff12 && $ff22)
 		$q2 = $queries->addTimeTableLab($conn, $class_id, $batch, $lab_id, $day, $slot_id2, $faculty_id1, $faculty_id2, $subject_id);
 }
-if($chk3 && $q1==1 && $q2==1) {
+if($chk3=="true" && $q1==1 && $q2==1) {
 	$slot_id3 = htmlentities($_POST['slot_id3']);
 	$slot3 = $queries->getSlotById($conn, $slot_id3)->fetch_assoc();
 	$slot_name3 = $slot3['start']." to ".$slot3['end'];

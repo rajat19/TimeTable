@@ -3,9 +3,9 @@
 		<section>
 			<div class="row">
 		        <div class="col s12 m8 offset-m2">
-		          <div class="card">
+		          <div class="card z-depth-3">
 		            <div class="card-content">
-		            <span class="card-title">Create Class Time Table</span>  
+		            <span class="card-title">Create Lab Time Table</span>  
 		            	<form>
 		            		<div class="row">
 		            			<div class="input-field col s12">
@@ -39,6 +39,20 @@
 										?>
 								    </select>
 							    	<label>Class Detail</label>
+							  	</div>
+		            		</div>
+		            		<div class="row">
+		            			<div class="input-field col s12">
+								    <select name="batch" id="batch">
+										<option value="AB">All</option>
+										<?php
+										$res = $queries->getBatchesAll($conn);
+										foreach($res as $batch=>$name) {
+											echo "<option value='$batch'>$name</option>";
+										}
+										?>
+								    </select>
+							    	<label>Batch</label>
 							  	</div>
 		            		</div>
 		            		<div class="row">
@@ -80,8 +94,8 @@
 		            	</form>
 		            		<div class="row">
 						    	<div class="input-field col s12">
-						    		<button class="btn waves-effect waves-light cyan darken-1" id="createfaculty" name="action">Submit
-										<i class="material-icons right">send</i>
+						    		<button class="btn waves-effect waves-light red lighten-1" id="createfaculty" name="action">Submit
+										<span><i class="fa fa-send"></i></span>
 									</button>
 						    	</div>
 						    </div>
@@ -94,6 +108,7 @@
 <script type="text/javascript">
 	$('#createfaculty').click(function(){
 		var class_id = $('#class_id').val();
+		var batch = $('#batch').val();
 		var day = $('#day').val();
 		var slot_id = $('#slot_id').val();
 		var faculty_id = $('#faculty_id').val();
@@ -102,6 +117,7 @@
 		$.post("ajax/create_class.php",
 		{
 			class_id: class_id,
+			batch: batch,
 			day: day,
 			slot_id: slot_id,
 			faculty_id: faculty_id,

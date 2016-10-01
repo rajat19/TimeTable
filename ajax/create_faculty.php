@@ -11,6 +11,7 @@ $class_id = htmlentities($_POST['class_id']);
 $day = htmlentities($_POST['day']);
 $slot_id = htmlentities($_POST['slot_id']);
 $faculty_id = htmlentities($_POST['faculty_id']);
+$batch = htmlentities($_POST['batch']);
 $subject_id = htmlentities($_POST['subject_id']);
 $faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
 $slot = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
@@ -27,7 +28,7 @@ if(!$ff) {
 }
 
 if($cf && $ff) {
-	$q = $queries->addTimeTableClass($conn, $class_id, $day, $slot_id, $faculty_id, $subject_id);
+	$q = $queries->addTimeTableFaculty($conn, $class_id, $batch, $day, $slot_id, $faculty_id, $subject_id);
 	if($q==1) {
 		$arr = array();
 		$arr[0] = "Timetable updated";

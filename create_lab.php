@@ -3,7 +3,7 @@
 		<section>
 			<div class="row">
 		        <div class="col s12 m8 offset-m2">
-		          <div class="card">
+		          <div class="card z-depth-3">
 		            <div class="card-content">
 		            <span class="card-title">Create Lab Time Table</span>  
 		            	<form id="forml">
@@ -172,8 +172,8 @@
 		            	</form>
 		            		<div class="row">
 						    	<div class="input-field col s12">
-						    		<button class="btn waves-effect waves-light cyan darken-1" id="createlab" name="action">Submit
-										<i class="material-icons right">send</i>
+						    		<button class="btn waves-effect waves-light red lighten-1" id="createlab" name="action">Submit
+										<span><i class="fa fa-send"></i></span>
 									</button>
 						    	</div>
 						    </div>
