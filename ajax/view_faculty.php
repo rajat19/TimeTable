@@ -45,19 +45,8 @@ if($day != 'all') {
 				echo "<td></td>";
 				$i++;
 			}
-			// if($oldslot != $slot_id) {
-			// 	if($class_type==0) echo "<td>LAB</td>";
-			// 	else {
-			// 		echo "<td>$subject_id</td>";
-			// 		$i++;
-			// 	}
-			// 	$oldslot = $slot_id;
-			// }
-			// else {
-			// 	if($class_type == 0) $i++;
-			// }
 			if($class_type==0) echo "<td>$subject_id<br>$sect ($batch_name)</td>";
-			else echo "<td>$subject_id<br>$class_name</td>";
+			else echo "<td>$subject_id<br>$sect</td>";
 			$i++;
 		}	
 		while($i<=9) {
@@ -104,32 +93,32 @@ else {
 			$l=1;
 			while($row = $schedule->fetch_assoc()) {
 				$slot_id = $row['slot_id'];
-			$class_id = $row['class_id'];
-			$cdetails = $queries->getClassById($conn, $class_id)->fetch_assoc();
-			$sem = $cdetails['semester'];
-			$sect = $cdetails['section'];
-			$class_type = $row['class_type'];
-			$subject_id = $row['subject_id'];
-			$faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
-			$cls;
-			if($class_type == 0) {
-				$lab_id = $row['lab_id'];
-				$lab_name = $queries->getLabById($conn, $lab_id)->fetch_assoc()['name'];
-				$batch = $row['batch'];
-				$batch_name = $queries->getBatchById($batch);
-				$cls = array($class_type, $subject_id, $sem, $sect, $lab_name);
-			}
-			else
-				$cls = array($class_type, $subject_id, $sem, $sect);
-			$cls = implode('$', $cls);
-			array_push($clsdata, $cls);
-			while($slot_id != $i) {
-				echo "<td></td>";
+				$class_id = $row['class_id'];
+				$cdetails = $queries->getClassById($conn, $class_id)->fetch_assoc();
+				$sem = $cdetails['semester'];
+				$sect = $cdetails['section'];
+				$class_type = $row['class_type'];
+				$subject_id = $row['subject_id'];
+				$faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
+				$cls;
+				if($class_type == 0) {
+					$lab_id = $row['lab_id'];
+					$lab_name = $queries->getLabById($conn, $lab_id)->fetch_assoc()['name'];
+					$batch = $row['batch'];
+					$batch_name = $queries->getBatchById($batch);
+					$cls = array($class_type, $subject_id, $sem, $sect, $lab_name);
+				}
+				else
+					$cls = array($class_type, $subject_id, $sem, $sect);
+				$cls = implode('$', $cls);
+				array_push($clsdata, $cls);
+				while($slot_id != $i) {
+					echo "<td></td>";
+					$i++;
+				}
+				if($class_type==0) echo "<td>$subject_id<br>$sect ($batch_name)</td>";
+				else echo "<td>$subject_id<br>$sect</td>";
 				$i++;
-			}
-			if($class_type==0) echo "<td>$subject_id<br>$sect ($batch_name)</td>";
-			else echo "<td>$subject_id<br>$class_name</td>";
-			$i++;
 			}
 		}
 		while($i<=9) {

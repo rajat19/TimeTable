@@ -29,5 +29,50 @@ class Functions {
 		if($count > 0) return false;
 		return true;
 	}
+
+	public function checkAttendanceMarked($conn, $queries, $faculty_id, $date) {
+		$q = $queries->getAttendanceByFacultyDate($conn, $faculty_id, $date);
+		$count = $q->num_rows;
+		if($count > 0) return false;
+		return true;
+	}
+
+	public function calculateDayOfWeek($date) {
+		$arr = explode('-', $date);
+		$d = $arr[2]; $m = $arr[1]; $y = $arr[0];
+		$tot; $feb; $sum = 0;
+		if($y%4==0) {
+			$tot = 366;
+			$feb = 29;
+		}
+		else {
+			$tot = 365;
+			$feb = 28;
+		}
+
+		$mon = array(31, $feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+		for($i=0; $i<$m-1; $i++) {
+			$sum += $mon[$i];
+		}
+		$dd = $d - 1;
+		$sum += $dd;
+		if($y>1) $dy = $y - 1;
+		$ly = $dy/4;
+		$nly = $dy - $ly;
+		$ly *= 366;
+		$nly *= 365;
+		$sum += $ly + $nly;
+		$res = $sum%7;
+
+		switch($res) {
+			case 0: return "sunday";
+			case 1: return "monday";
+			case 2: return "tuesday";
+			case 3: return "wednesday";
+			case 4: return "thursday";
+			case 5: return "friday";
+			case 6: return "saturday";
+		}
+	}
 }
 ?>
