@@ -6,5 +6,9 @@
 		$(".button-collapse").sideNav();
 		$(document).ready(function() {
 			$('select').material_select();
+			$('.modal').modal({
+				dismissible: true, 
+				opacity: .5,  
+			});
 		});
 	</script>

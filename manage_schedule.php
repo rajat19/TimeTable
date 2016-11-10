@@ -31,22 +31,33 @@ if(isset($_POST['facid'])) {
 		echo "<tr><td>$slot[$i]</td><td>$sem</td><td>$sect</td><td>$subject_id$ct</td><td><form><input type='hidden' name='day' value='$day'><input type='hidden' name='slot_id' value='$slot_id'><input type='hidden' name='class_type' value='$class_type'>";
 		if($class_type==1)
 			echo "<input type='hidden' name='class_id' value='$class_id'>";
-		echo"</form><button id='assignBtn' class='btn waves-effect waves-light red lighten-1'>Manage</button></td></tr>";
+		echo"</form><a class='btn waves-effect waves-light red lighten-1' href='#modal$i'>Manage</a></td></tr>";
+		if($class_type==0) $facs = $functions->findFreeFacultiesClass($conn, $queries, $class_id, $slot_id, $day);
+		if($class_type==1) $facs = $functions->findFreeFacultiesLab($conn, $queries, $slot_id, $day);
+		$w[$i] = $facs;
 		$i++;
 	}
 	echo "</table>";
 	echo "</div></div></div></section></div>";
+
+	foreach($w as $i=>$v) {
+		echo "<div id='modal$i' class='modal bottom-sheet' style='z-index: 1003; display: block; opacity: 1;'>
+		    <div class='modal-content'>
+		      <h4>Modal Header $i</h4>
+		      <p>A bunch of text</p>
+		    </div>
+		    <div class='modal-footer'>
+		      <a href='#!' class=' modal-action modal-close waves-effect waves-green btn-flat'>Agree</a>
+		    </div>
+		  </div>";
+	}
 }
+
 else {
 	header('Location:allot_class.php');
 }
 ?>
-<div id="myModal">
-
-</div>
 <?php include 'include/footer.inc.php'; ?>
 <script type="text/javascript">
-	$('#assignBtn').click(function() {
-		
-	});
+	
 </script>

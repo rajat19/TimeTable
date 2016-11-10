@@ -54,6 +54,11 @@ class Queries {
 		return $q;
 	}
 
+	public function getFacultiesFreeByClassDaySlot($conn, $class_id, $slot_id, $day) {
+		$q = $conn->query("SELECT * FROM faculties WHERE id NOT IN (SELECT faculty_id FROM timetables WHERE class_id='".mysqli_escape_string($conn, $class_id)."' AND day='$day' AND slot_id='$slot_id')");
+		return $q;
+	}
+
 	public function getLabById($conn, $lab_id) {
 		$q = $conn->query("SELECT * FROM labs WHERE id='".mysqli_escape_string($conn, $lab_id)."'");
 		return $q;

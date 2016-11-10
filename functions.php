@@ -74,5 +74,13 @@ class Functions {
 			case 6: return "saturday";
 		}
 	}
+
+	public function findFreeFacultiesClass($conn, $queries, $class_id, $slot_id, $day) {
+		$facultiesFree = $queries->getFacultiesFreeByClassDaySlot($conn, $class_id, $slot_id, $day);
+	}
+
+	public function findFreeFacultiesLab($conn, $queries, $slot_id, $day) {
+		
+	}
 }
 ?>
