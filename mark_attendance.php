@@ -1,3 +1,4 @@
+<?php $access = array(0); ?>
 <?php include 'include/header.inc.php' ?>
 	<div class="container">
 		<section>
@@ -12,7 +13,7 @@
 										<select name="faculty_id" id="faculty_id">
 										<option value="" disabled selected>Choose your option</option>
 										<?php
-										$today = date('Y-m-d', strtotime('+3 hours 30 minutes'));
+										$today = date('Y-m-d', strtotime('+4 hours 30 minutes'));
 										$res = $queries->getFacultiesByAttendanceNotMarked($conn, $today);
 										if($res->num_rows > 0) {
 											while($row = $res->fetch_assoc()) {
@@ -29,7 +30,7 @@
 							</form>
 							<div class="row">
 						    	<div class="input-field col s12">
-						    		<button class="btn waves-effect waves-light red lighten-1" id="markfaculty" name="action">Mark
+						    		<button class="btn waves-effect waves-light blue-grey lighten-1" id="markfaculty" name="action">Mark
 										<span><i class="fa fa-check"></i></span>
 									</button>
 						    	</div>

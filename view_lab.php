@@ -1,3 +1,4 @@
+<?php $access = array(0); ?>
 <?php include 'include/header.inc.php' ?>
 	<div class="container">
 		<section>
@@ -41,7 +42,7 @@
 							</form>
 							<div class="row">
 						    	<div class="input-field col s12">
-						    		<button class="btn waves-effect waves-light red lighten-1" id="viewlab" name="action">View
+						    		<button class="btn waves-effect waves-light blue-grey lighten-1" id="viewlab" name="action">View
 										<span><i class="fa fa-send"></i></span>
 									</button>
 						    	</div>

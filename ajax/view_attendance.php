@@ -28,7 +28,7 @@ if($marked->num_rows > 0) {
 }
 
 $allfaculties = $queries->getFacultiesAll($conn);
-echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 red lighten-4'><div class='card-content'><span class='card-title'>Attendance Not Marked</span>";
+echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 red lighten-4'><div class='card-content'><span class='card-title'>Attendance Not Marked (Date: $fdate)</span>";
 echo "<table class='bordered responsive-table'>";
 echo "<thead><tr><th>Faculty Name</th><th>Faculty Name</th></tr></thead>";
 $i = 0;

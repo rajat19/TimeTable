@@ -8,8 +8,8 @@ $functions = new Functions();
 
 $msg = "";
 $faculty_id = htmlentities($_POST['faculty_id']);
-$today = date('Y-m-d', strtotime('+3 hours 30 minutes'));
-$time = date('H:i:s', strtotime('+3 hours 30 minutes'));
+$today = $functions->currentDateYmd();
+$time = $functions->currentTime();
 $day = $functions->calculateDayOfWeek($today);
 // echo "$today $time $day";
 $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
