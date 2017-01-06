@@ -1,5 +1,6 @@
 <?php $access = array(0, 1); ?>
 <?php include 'include/header.inc.php' ?>
+<?php $faculty_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id']; ?>
 	<div class="container">
 		<section>
 			<div class="row">
@@ -28,12 +29,12 @@
 								</div>
 								<?php }
 								else if($g_usertype == 1)
-									echo "<input type='hidden' name='faculty_id' id='faculty_id' value='$g_id'>"; 
+									echo "<input type='hidden' name='faculty_id' id='faculty_id' value='$faculty_id'>"; 
 								 ?>
 								<div class="row">
 									<div class="input-field col s12">
-										<p class="likelabel">Enter date of leave</p>
-										<input type="date" name="leave_date" id="leave_date">
+										<label>Enter date of leave</label>
+										<input type="date" name="leave_date" class="datepicker" id="leave_date">
 									</div>
 								</div>
 							</form>
@@ -57,7 +58,7 @@
 	});
 	$('#markfaculty').click(function() {
 		var faculty_id = $('#faculty_id').val();
-		var leave_date = $('#leave_date').val();
+		var leave_date = $('input[name=leave_date]').val();
 		// console.log(faculty_id+" & "+leave_date);
 		$.post("ajax/mark_leave.php",
 		{

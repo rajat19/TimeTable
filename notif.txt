@@ -1,0 +1,53 @@
+How notifications should work-
+
+Database-
+notification_type
+usertype
+user_id
+notified_by
+details
+read
+
+Notify about-
+Admin 0
+A1. Faculty requesting leave
+A2. Attendance not marked still
+A3. Faculty not reaching class
+A4. Accept/Reject Substitution
+
+Faculty 1
+B1. Substitutions assigned to them
+B2. Status of their leave
+
+Student 2
+C1. Substitution assigned in their class
+
+CR 3
+C1. Substitution assigned in their class
+
+Who would notify-
+A1. faculty
+A2. faculty
+A3. cr
+A4. faculty
+B1. admin
+B2. admin
+C1. admin
+
+When to notify-
+A1. when faculty requested a leave
+A2. after every class( or start of day) when some faculties still not marked their attendance
+A3. when faculty not reached class even after 10 minutes
+A4. when faculty accepted rejected substitution (0 none 1 accept -1 reject)
+B1. when admin through algo assigns a substitution to a faculty
+B2. when admin accepts rejects leave (0 none 1 granted -1 not granted)
+C1. when admin gets notification that faculty accepted rejected substitution
+
+What to notify(sentences)-
+d A1. _FACULTY requested a leave for _DATE
+A2. _COUNT faculties have still not marked their attendance. View here @view_attendance
+A3. _FACULTY had still not reached class _CLASS
+A4. _REPLACEMENT had (accepted/rejected) substitution given for _CLASS during _TIME for replacing _FACULTY
+d B1. You have been assigned a substitution for _CLASS during _TIME in replacement to _FACULTY. View here @substitution_status
+d B2. Your leave had been (granted/rejected) for date _DATE
+C1. _FACULTY had been substitued with _REPLACEMENT for duration _TIME

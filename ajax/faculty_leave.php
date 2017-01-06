@@ -9,10 +9,8 @@ $functions = new Functions();
 
 $date = htmlentities($_POST['date']);
 $timeperiod = htmlentities($_POST['timeperiod']);
-$faculty_id = $g_id;
-$d = explode('-', $date);
-krsort($d);
-$fdate = implode('-', $d);
+$faculty_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'];
+$fdate = $functions->prettyDateFormat($date);
 $facultiesonleave; $x;
 if($timeperiod == 0) {
 	$x = "Before";
@@ -29,7 +27,7 @@ if($leave->num_rows > 0){
 	while($row = $leave->fetch_assoc()) {
 		$leave_date = $functions->prettyDateFormat($row['leave_date']);
 		$request_date = $functions->prettyDateFormat($row['request_date']);
-		$granted = ($row['granted']==1)?'Yes':'No';
+		$granted = ($row['granted']==0)?'Still Pending':(($row['granted']==1)?'Yes':'No');
 		echo "<tr><td>$request_date</td><td>$leave_date</td><td>$granted</td></tr>";
 	}
 	echo "</table>";

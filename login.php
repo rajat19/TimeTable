@@ -5,8 +5,8 @@
 			<div class="row">
 		        <div class="col s12 m6 offset-m3">
 		        	<div class="card z-depth-3">
-		        		<div class="card-header" style="padding: 10px; background-color: #dee1e3 !important">
-		        			<h5 style="color: #6e7984 !important">Log in to TimeTable Management</h5>
+		        		<div class="card-header card-grey" >
+		        			<h5 class="dark-text">Log in to TimeTable Management</h5>
 		        		</div>
 			            <div class="card-content">
 			            	<form>
@@ -24,11 +24,11 @@
 								</div>
 			            	</form>
 			            </div>
-			            <div class="card-content" style="background-color: #dee1e3 !important">
+			            <div class="card-content card-grey">
 			            	<div class="row">
 						    	<div class="col s12 m8">
-									<a href="password.php" style="color:#777">Forgotten your password ?</a><br>
-									<a href="register.php" style="color:#777">Sign up Now</a>
+									<a href="password.php" class="link-grey">Forgotten your password ?</a><br>
+									<a href="register.php" class="link-grey">Don't have an Account? Sign up Now</a>
 						    	</div>
 						    	<div class="col s12 m4">
 						    		<button class="btn waves-effect waves-light blue-grey lighten-1" id="login" name="btnlogin">Login

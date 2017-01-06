@@ -11,6 +11,8 @@ $time = htmlentities($_POST['date']);
 $date = date('Y-m-d', strtotime($time));
 $day = htmlentities($_POST['day']);
 $slot_id = htmlentities($_POST['slot_id']);
+$class_id = htmlentities($_POST['class_id']);
+$lab_id = htmlentities($_POST['lab_id']);
 $faculty_id = htmlentities($_POST['faculty_id']);
 $faculty_title = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['title'];
 $faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
@@ -29,8 +31,9 @@ if(!$sf) {
 	echo json_encode($arr);
 }
 else {
-	$q = $queries->addSubstitution($conn, $date, $day, $slot_id, $faculty_id, $subject_id, $class_type, $replacement_id);
+	$q = $queries->addSubstitution($conn, $date, $day, $slot_id, $class_id, $lab_id, $faculty_id, $subject_id, $class_type, $replacement_id);
 	if($q==1) {
+		$functions->setNotificationB1($conn, $queries, $faculty_id, $replacement_id, $class_id, $lab_id, $slot_id, $date);
 		$arr = array();
 		$arr[0] = "Substitution assigned";
 		$arr[1] = "";

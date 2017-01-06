@@ -6,8 +6,8 @@ include '../functions.php';
 $queries = new Queries();
 $functions = new Functions();
 
-$username = $_POST['username'];
-$password = $_POST['password'];
+$username = htmlentities($_POST['username']);
+$password = md5(htmlentities($_POST['password']));
 
 if(empty($username) || empty($password)) {
 	echo "<script>swal('Enter some values first')</script>";
@@ -24,7 +24,7 @@ else {
 			$usertype = $row['usertype'];
 			$_SESSION['id'] = $id;
 			$_SESSION['usertype'] = $usertype;
-			$_SESSION['username'] = $name;
+			$_SESSION['name'] = $name;
 			// echo "<script>swal('Welcome $name')</script>";
 			// header('Location:../home.php');
 			$arr = array();

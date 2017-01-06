@@ -10,8 +10,8 @@
 							<form>
 								<div class="row">
 									<div class="input-field col s12">
-										<p class="likelabel">Enter date</p>
-										<input type="date" name="date" id="date">
+										<label>Enter date</label>
+										<input type="date" name="date" id="date" class="datepicker">
 									</div>
 								</div>
 							</form>
@@ -38,7 +38,7 @@
 		$('#schedule').hide();
 	});
 	$('#allotclass').click(function() {
-		var date = $('#date').val();
+		var date = $('input[name=date]').val();
 		date1 = new Date(date);
 		console.log(date);
 		$.post("ajax/temp_class.php", {

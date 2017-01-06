@@ -10,8 +10,8 @@
 							<form>
 								<div class="row">
 									<div class="input-field col s12">
-										<p class="likelabel">Enter date</p>
-										<input type="date" name="date" id="date">
+										<label>Enter date</label>
+										<input type="date" class="datepicker" name="date" id="date">
 									</div>
 								</div>
 							</form>
@@ -37,7 +37,7 @@
 		$('#schedule').hide();
 	});
 	$('#viewattn').click(function() {
-		var date = $('#date').val();
+		var date = $('input[name=date]').val();
 		console.log(date);
 		$.post("ajax/view_attendance.php",
 		{

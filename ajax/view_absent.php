@@ -10,30 +10,35 @@ $date = htmlentities($_POST['date']);
 $today = $functions->currentDateYmd();
 $day = $functions->calculateDayOfWeek($date);
 $Day = $functions->capitalize($day);
-$d = explode('-', $date);
-krsort($d);
-$fdate = implode('-', $d);
+$fdate = $functions->prettyDateFormat($date);
 $facultiesonleave = $queries->getFacultiesOnLeaveByDate($conn, $date);
-echo "<div class='row'><section style='margin:10px;'><div class='col s12 m10 offset-m1'><div class='card z-depth-3 blue-grey lighten-5'><div class='card-content'><span class='card-title'>Faculties on Leave (Day: $Day $fdate)</span>";
 $leavefac = array();
+echo "<div class='row'><section style='margin:10px;'><div class='col s12 m10 offset-m1'><div class='card z-depth-3 blue-grey lighten-5'><div class='card-content'><span class='card-title'>Faculties on Leave (Day: $Day $fdate)</span>";
 if($facultiesonleave->num_rows > 0){
 	echo "<table class='bordered responsive-table'>";
 	echo "<thead><tr><th>Faculty Name</th><th>Department</th><th>Manage</th></tr></thead>";
 	while($row = $facultiesonleave->fetch_assoc()) {
-		$facid = $row['id'];
+		$facid = $row['faculty_id'];
 		$facname = $row['name'];
 		$dept = $row['department'];
 		$leavefac[] = $facid;
-		echo "<tr><td>$facname</td><td>$dept</td><td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";
+		$granted = $row['granted'];
+		echo "<tr><td>$facname</td><td>$dept</td>";
+		if($granted == 1) echo "<td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
+		else if($granted == 0) echo "<td>Leave Pending</td>";
+		else echo "<td></td>";
+		echo "</tr>";
 	}
 	echo "</table>";
 }
+else {
+	echo "<h5 style='text-align:center; color:red;'>No faculties on leave</h5>";
+}
 echo "</div></div></div></section></div>";
 
-// echo "$today $date";
 if($today == $date) {
 	$absentfaculties = $queries->getFacultiesByAttendanceNotMarked($conn, $date);
-	echo "<div class='row'><section style='margin:10px;'><div class='col s12 m10 offset-m1'><div class='card z-depth-3 blue-grey lighten-5'><div class='card-content'><span class='card-title'>Faculties with Attendance Not Marked(Day: $Day $fdate)</span>";
+	echo "<div class='row'><section style='margin:10px;'><div class='col s12 m10 offset-m1'><div class='card z-depth-3 blue-grey lighten-5'><div class='card-content'><span class='card-title'>Faculties with Attendance Not Marked (Day: $Day $fdate)</span>";
 	if($absentfaculties->num_rows > 0) {
 		echo "<table class='bordered responsive-table'>";
 		echo "<thead><tr><th>Faculty Name</th><th>Department</th><th>Manage</th></tr></thead>";
@@ -43,13 +48,13 @@ if($today == $date) {
 			$dept = $row['department'];
 
 			if(!in_array($facid, $leavefac)) {
-				echo "<tr><td>$facname</td><td>$dept</td><td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";
+				echo "<tr><td>$facname</td><td>$dept</td><td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";
 			}
 		}
 		echo "</table>";
 	}
 	else {
-		echo "No Faculty is Absent on date";
+		echo "<h5 style='text-align:center; color:red;'>No faculties is absent today</h5>";
 	}
 	echo "</div></div></div></section></div>";
 }

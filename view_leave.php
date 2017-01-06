@@ -9,9 +9,9 @@
 				<div class=" col s12 m8 offset-m2">
 				<div class="card z-depth-3">
 					<div class="card-content center">
-						<button class="btn waves-effect waves-light blue-grey lighten-1" id="viewpst" name="action">View Past Leaves <span><i class="fa fa-send"></i></span></button>
+						<button class="btn waves-effect waves-light blue-grey lighten-1" id="viewpst" name="action"><span><i class="fa fa-rotate-left"></i></span> View Past Leaves</button>
 						
-						<button class="btn waves-effect waves-light blue-grey lighten-1" id="viewfut" name="action">View Future Leaves <span><i class="fa fa-send"></i></span></button>
+						<button class="btn waves-effect waves-light blue-grey lighten-1" id="viewfut" name="action">View Future Leaves <span><i class="fa fa-rotate-right"></i></span></button>
 					</div>
 				</div>
 				</div>
@@ -53,6 +53,27 @@
 			$('#schedule').html(response);
 		});
 	});
+		function accept(lid) {
+			var a = 1;
+			$.post("ajax/grant_leave.php", {
+				leave_id: lid,
+				a: a
+			},
+			function (response, status) {
+				$('#x-'+lid).html(response);
+			});
+		}
+
+		function reject(lid) {
+			var a = -1;
+			$.post("ajax/grant_leave.php", {
+				leave_id: lid,
+				a: a
+			},
+			function (response, status) {
+				$('#x-'+lid).html(response);
+			});
+		}
 </script>
 </body>
 </html>

@@ -9,7 +9,8 @@ $functions = new Functions();
 $msg = "";
 $faculty_id = htmlentities($_POST['faculty_id']);
 $leave_date = htmlentities($_POST['leave_date']);
-if($g_usertype == 1 && $faculty_id!=$g_id) {
+$f_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'];
+if($g_usertype == 1 && $faculty_id!=$f_id) {
 	$arr = array();
 	$arr[0] = "Error";
 	$arr[1] = "Leave cannot be marked";
@@ -23,8 +24,9 @@ else {
 	$clm = $functions->checkLeaveMarked($conn, $queries, $faculty_id, $leave_date);
 	if($clm) {
 		if($leave_date>=$today) {
-			$q = $queries->addLeave($conn, $faculty_id, $leave_date, $today, $today, 1);
+			$q = $queries->addLeave($conn, $faculty_id, $leave_date, $today);
 			if($q==1) {
+				$functions->setNotificationA1($conn, $queries, $faculty_id, $leave_date);
 				$arr = array();
 				$arr[0] = "Leave Marked";
 				$arr[1] = "";

@@ -6,7 +6,7 @@ include '../include/session.php';
 
 $queries = new Queries();
 $functions = new Functions();
-$faculty_id = $g_id;
+$faculty_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'];
 $type = htmlentities($_POST['type']);
 $today = $functions->currentDateYmd();
 $time = $functions->currentTime();

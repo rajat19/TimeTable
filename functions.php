@@ -2,7 +2,45 @@
 
 class Functions {
 
-/*Special functions*/
+/*Date and Time functions*/
+	public function calculateDayOfWeek($date) {
+		$arr = explode('-', $date);
+		$d = $arr[2]; $m = $arr[1]; $y = $arr[0];
+		$tot; $feb; $sum = 0;
+		if($y%4==0) {
+			$tot = 366;
+			$feb = 29;
+		}
+		else {
+			$tot = 365;
+			$feb = 28;
+		}
+
+		$mon = array(31, $feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+		for($i=0; $i<$m-1; $i++) {
+			$sum += $mon[$i];
+		}
+		$dd = $d - 1;
+		$sum += $dd;
+		if($y>1) $dy = $y - 1;
+		$ly = $dy/4;
+		$nly = $dy - $ly;
+		$ly *= 366;
+		$nly *= 365;
+		$sum += $ly + $nly;
+		$res = $sum%7;
+
+		switch($res) {
+			case 0: return "sunday";
+			case 1: return "monday";
+			case 2: return "tuesday";
+			case 3: return "wednesday";
+			case 4: return "thursday";
+			case 5: return "friday";
+			case 6: return "saturday";
+		}
+	}
+
 	public function capitalize($string) {
 		$capital = substr(strtoupper($string), 0, 1).substr($string, 1);
 		return $capital;
@@ -32,24 +70,40 @@ class Functions {
 		else return $date;
 		$mon = "";
 		switch($m) {
-			case '01': $mon = "JAN"; break;
-			case '02': $mon = "FEB"; break;
-			case '03': $mon = "MAR"; break;
-			case '04': $mon = "APR"; break;
-			case '05': $mon = "MAY"; break;
-			case '06': $mon = "JUN"; break;
-			case '07': $mon = "JUL"; break;
-			case '08': $mon = "AUG"; break;
-			case '09': $mon = "SEP"; break;
-			case '10': $mon = "OCT"; break;
-			case '11': $mon = "NOV"; break;
-			case '12': $mon = "DEC"; break;
+			case '01': $mon = "Jan"; break;
+			case '02': $mon = "Feb"; break;
+			case '03': $mon = "Mar"; break;
+			case '04': $mon = "Apr"; break;
+			case '05': $mon = "May"; break;
+			case '06': $mon = "Jun"; break;
+			case '07': $mon = "Jul"; break;
+			case '08': $mon = "Aug"; break;
+			case '09': $mon = "Sep"; break;
+			case '10': $mon = "Oct"; break;
+			case '11': $mon = "Nov"; break;
+			case '12': $mon = "Dec"; break;
 		}
 		return "$d $mon, $y";
 	}
 
-/*General functions*/
+	public function prettyTimeFormat($time) {
+		$hms = explode(':', $time);
+		$h = ""; $ap = ""; $ih = (int)$hms[0];
+		if(0<=$ih && $ih<12) {
+			$ap = "AM";
+			if($ih==0) $h = "12";
+			else $h = $hms[0];
+		}
+		else {
+			if($ih==12) $h = "12";
+			else $h = $ih - 12;
+			$ap = "PM";
+		}
+		return "$h:$hms[1] $ap";
+	}
+/*.Date and Time functions*/
 
+/*Check functions*/
 	public function checkClassFree($conn, $queries, $class_id, $day, $slot_id) {
 		$q = $queries->getTimetableByClassSlot($conn, $class_id, $day, $slot_id);
 		$count = $q->num_rows;
@@ -113,44 +167,30 @@ class Functions {
 		return true;	
 	}
 
-	public function calculateDayOfWeek($date) {
-		$arr = explode('-', $date);
-		$d = $arr[2]; $m = $arr[1]; $y = $arr[0];
-		$tot; $feb; $sum = 0;
-		if($y%4==0) {
-			$tot = 366;
-			$feb = 29;
-		}
-		else {
-			$tot = 365;
-			$feb = 28;
-		}
-
-		$mon = array(31, $feb, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-		for($i=0; $i<$m-1; $i++) {
-			$sum += $mon[$i];
-		}
-		$dd = $d - 1;
-		$sum += $dd;
-		if($y>1) $dy = $y - 1;
-		$ly = $dy/4;
-		$nly = $dy - $ly;
-		$ly *= 366;
-		$nly *= 365;
-		$sum += $ly + $nly;
-		$res = $sum%7;
-
-		switch($res) {
-			case 0: return "sunday";
-			case 1: return "monday";
-			case 2: return "tuesday";
-			case 3: return "wednesday";
-			case 4: return "thursday";
-			case 5: return "friday";
-			case 6: return "saturday";
-		}
+	public function checkUseremailExists($conn, $queries, $email) {
+		$q = $queries->getUserByEmail($conn, $email);
+		$count = $q->num_rows;
+		if($count > 0) return false;
+		return true;	
 	}
 
+	public function checkUserphoneExists($conn, $queries, $phone) {
+		$q = $queries->getUserByPhone($conn, $phone);
+		$count = $q->num_rows;
+		if($count > 0) return false;
+		return true;	
+	}
+
+	public function getClassName($conn, $queries, $class_id) {
+		$cdetails = $queries->getClassById($conn, $class_id)->fetch_assoc();
+		$y = $cdetails['year'];
+		$x = ($y==2)?"2nd":(($y==3)?"3rd":"4th");
+		$class = $cdetails['branch']." ".$x." year ".$cdetails['section'];
+		return array($class, $cdetails['location']);
+	}
+/*.Check functions*/
+
+/*Allotment Algorithm functions*/
 	public function findFreeFacultiesClass($conn, $queries, $main, $class_id, $slot_id, $day, $date) {
 		$classFaculties = $queries->getFacultiesByClass($conn, $class_id);
 		$c = 0;
@@ -159,7 +199,6 @@ class Functions {
 		while($fac = $classFaculties->fetch_assoc()) {
 			$facid = $fac['id'];
 			$facname = $fac['name'];
-			// echo $class_id."=".$facname."$facid\n";
 			if($facid != $main) {
 				/*Check if faculty is free from any schedule*/
 				if($this->checkFacultyFree($conn, $queries, $facid, $day, $slot_id) && $this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id)) {
@@ -173,7 +212,6 @@ class Functions {
 					$class_type = $sch['class_type'];
 					if($class_type==0) $inLab[] = $facid;
 				}
-				// $list[] = $facid;
 			}
 		}
 		if($c==0) {
@@ -185,7 +223,6 @@ class Functions {
 				}
 			}
 		}
-		// print_r($list); echo "\n";
 		return $list;
 	}
 
@@ -194,8 +231,10 @@ class Functions {
 		$list = array();
 		foreach($allFreeFaculties as $faculty) {
 			$facid = $faculty['id'];
-			if($this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id)) {
-				$list[] = $facid;
+			if($facid != $main) {
+				if($this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id)) {
+					$list[] = $facid;
+				}
 			}
 		}
 		return $list;
@@ -228,5 +267,219 @@ class Functions {
 		sort($final);
 		return $final;
 	}
+/*.Allotment Algorithm functions*/
+
+/*Validation functions*/
+	public function validateEmail($email) {
+		if(filter_var($email, FILTER_VALIDATE_EMAIL)) return 1;
+		return 0;
+	}
+
+	public function validateName($name) {
+		$regex='/^[a-zA-Z ]*$/';
+		if(preg_match($regex, $name)) return 1;
+		return 0;
+	}
+
+	public function validatePassword($password) {
+		$regex = '/^[a-zA-Z0-9!@#$%^&*]{6,50}$/';
+		if(preg_match($regex, $password)) {
+			$x = str_split($password);
+			$ar = array('!', '@', '#', '$', '%', '^', '&', '*');
+			$flag = 0;
+			foreach($x as $v) {
+				if(in_array($v, $ar)) {
+					$flag = 1;
+					break;
+				}
+			}
+			if($flag == 1) return 1;
+			return 0;
+		}
+		return 0;
+	}
+
+	public function validatePhone($phone) {
+		$regex='/^[0-9]{10}$/';
+		if(preg_match($regex, $phone)) return 1;
+		return 0;
+	}
+
+	public function validateUsername($username) {
+		$regex = '/^[a-zA-Z0-9]{5,20}$/';
+		if (preg_match($regex, $username)) return 1;
+		return 0;
+	}
+/*.Validation functions*/
+
+/*Notification functions*/
+/*
+1 = A1            5 = B1 
+2 = A2            6 = B2
+3 = A3            7 = C1
+4 = A4
+*/
+	public function checkNotification($conn, $queries, $user_id) {
+		$q = $queries->getNotificationsByUser($conn, $user_id);
+		$count = $q->num_rows;
+		return $count;
+	}
+
+	public function createNotification($conn, $queries, $notif_type, $usertype, $user_id, $notified_by, $string) {
+		$date = $this->currentDateYmd();
+		$time = $this->currentTime();
+		$q = $queries->addNotification($conn, $notif_type, $usertype, $user_id, $notified_by, $date,$time,$string);
+	}
+
+	public function displayNotifications($conn, $queries, $user_id) {
+		$q = $queries->getNotificationsByUser($conn, $user_id);
+		$all = array();
+		if($q->num_rows > 0) {
+			while($row = $q->fetch_assoc()) {
+				$details = $row['details'];
+				$notif_type = $row['notification_type'];
+				$notif_date = $this->prettyDateFormat($row['date']);
+				$notif_time = $this->prettyTimeFormat($row['time']);
+				$notified_by = $queries->getUserById($conn, $row['notified_by'])->fetch_assoc()['name'];
+				$string = $this->getNotification($notif_type, $details);
+				$arr = array($notified_by, $notif_date, $notif_time, $string);
+				$all[] = $arr;
+			}
+		}
+		return $all;
+	}
+
+	public function getNotification($notif_type, $details) {
+		$arr = explode('$$', $details);
+		$s = "";
+		switch($notif_type) {
+			case 1:
+				$date = $this->prettyDateFormat($arr[1]);
+				$s = "$arr[0] requested a leave for $date";
+				break;
+			case 2:
+				$s = "$arr[0] faculties have still not marked their attendance. <a href='view_attendance.php'>View here</a>";
+				break;
+			case 3:
+				$s = "$arr[0] had still not reached class $arr[1]";
+				break;
+			case 4:
+				$x = ($arr[1]==1)?"accepted":"rejected";
+				$s = "$arr[0] had $x substitution given for $arr[2] during $arr[3] for replacing $arr[4]";
+				break;
+			case 5:
+				$today = $this->currentDateYmd();
+				$date = $arr[2];
+				$fdate = $this->prettyDateFormat($date);
+				$x = "";
+				if($today == $date) $x = "<b>today</b>";
+				else $x = "on <b>$fdate</b>";
+				$s = "You have been assigned a substitution for $arr[0] $x during <b>$arr[1]</b> in replacement to $arr[3]. <a href='my_substitution.php'>View Substitution here</a>";
+				break;
+			case 6:
+				$x = ($arr[0]==1)?"granted":"rejected";
+				$date = $this->prettyDateFormat($arr[1]);
+				$s = "Your leave had been $x for date $date ";
+				break;
+			case 7:
+				$s = "$arr[0] had been substitued with $arr[1] for duration $arr[2] ";
+				break;
+		}
+		return $s;
+	}
+
+	public function setNotificationA1($conn, $queries, $faculty_id, $date) {
+		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
+		$name = $fdetails['title']." ".$fdetails['name'];
+		$faculty_userid = $fdetails['user_id'];
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$string = implode('$$', array($name, $date));
+		$this->createNotification($conn, $queries, 1, 0, $admin, $faculty_userid, $string);
+	}
+
+	public function setNotificationA2($conn, $queries) {
+		$q = $queries->getFacultiesByAttendanceNotMarked($conn, $date);
+		$count = $q->num_rows;
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$string = implode('$$', array($count));
+		$this->createNotification($conn, $queries, 2, 0, $admin, '', $string);		
+	}
+
+	public function setNotificationA3($conn, $queries, $faculty_id, $cr_id, $class_id) {
+		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
+		$facname = $fdetails['title']." ".$fdetails['name'];
+		$c = $this->getClassName($conn, $queries, $class_id);
+		$class = $c[0]." in ".$c[1];
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$string = implode('$$', array($facname, $class));
+		$this->createNotification($conn, $queries, 3, 0, $admin, $cr_id, $string);
+	}
+
+	public function setNotificationA4($conn, $queries, $substitution_id) {
+		$sub = $queries->getSubstitutionById($conn, $substitution_id)->fetch_assoc();
+		$replacement_id = $sub['replacement_id'];
+		$rdetails = $queries->getFacultyById($conn, $replacement_id)->fetch_assoc();
+		$repname = $rdetails['title']." ".$rdetails['name'];
+		$faculty_id = $sub['faculty_id'];
+		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
+		$facname = $fdetails['title']." ".$fdetails['name'];
+		$lab_id = $sub['lab_id'];
+		$c = $this->getClassName($conn, $queries, $class_id);
+		if($lab_id!=0) {
+			$location = $queries->getLabById($conn, $lab_id)->fetch_assoc()['name'];
+		}
+		else $location = $c[1];
+		$class = $c[0]." in ".$location;
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$accepted = $sub['accepted'];
+		$s = $queries->getSlotById($conn, $sub['slot_id'])->fetch_assoc();
+		$slot = $s['start']." to ".$s['end'];
+		$string = implode('$$', array($repname, $accepted, $class, $slot, $facname));
+		$this->createNotification($conn, $queries, 4, 0, $admin, $faculty_id, $string);
+	}
+
+	public function setNotificationB1($conn, $queries, $faculty_id, $replacement_id, $class_id, $lab_id, $slot_id, $date) {
+		$rdetails = $queries->getFacultyById($conn, $replacement_id)->fetch_assoc();
+		$repname = $rdetails['title']." ".$rdetails['name'];
+		$repuserid = $rdetails['user_id'];
+		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
+		$facname = $fdetails['title']." ".$fdetails['name'];
+		$facuserid = $fdetails['user_id'];
+		$c = $this->getClassName($conn, $queries, $class_id);
+		if($lab_id!=0) {
+			$location = $queries->getLabById($conn, $lab_id)->fetch_assoc()['name'];
+		}
+		else $location = $c[1];
+		$class = $c[0]." in ".$location;
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$s = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
+		$slot = $this->prettyTimeFormat($s['start'])." to ".$this->prettyTimeFormat($s['end']);
+		$string = implode('$$', array($class, $slot, $date, $facname));
+		$this->createNotification($conn, $queries, 5, 1, $repuserid, $admin, $string);
+	}
+
+	public function setNotificationB2($conn, $queries, $leave_id) {
+		$leave = $queries->getLeaveById($conn, $leave_id)->fetch_assoc();
+		$granted = $leave['granted'];
+		$leave_date = $leave['leave_date'];
+		$faculty_userid = $queries->getFacultyById($conn, $leave['faculty_id'])->fetch_assoc()['user_id'];
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$string = implode('$$', array($granted, $leave_date));
+		$this->createNotification($conn, $queries, 6, 1, $faculty_userid, $admin, $string);	
+	}
+
+	public function setNotificationC1($conn, $queries, $faculty_id, $replacement_id, $slot_id, $class_id) {
+		$rdetails = $queries->getFacultyById($conn, $replacement_id)->fetch_assoc();
+		$repname = $rdetails['title']." ".$rdetails['name'];
+		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
+		$facname = $fdetails['title']." ".$fdetails['name'];
+		$s = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
+		$slot = $s['start']." to ".$s['end'];
+		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
+		$cr_id = $queries->getClassById($class_id)->fetch_assoc()['cr_id'];
+		$string = implode('$$', array($facname, $repname, $slot));
+		$this->createNotification($conn, $queries, 7, 2, $cr_id, $admin, $string);
+	}
+/*.Notification functions*/
 }
 ?>

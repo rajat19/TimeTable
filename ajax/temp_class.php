@@ -9,9 +9,7 @@ $functions = new Functions();
 $date = htmlentities($_POST['date']);
 $today = date('Y-m-d', strtotime('+4 hours 30 minutes'));
 $temp = $queries->getSubstitutionByDate($conn, $date);
-$d = explode('-', $date);
-krsort($d);
-$fdate = implode('-', $d);
+$fdate = $functions->prettyDateFormat($date);
 echo "<div><section style='margin:10px;'><div class='col s12 m10 offset-m1'><div class='card z-depth-3 blue-grey lighten-5'><div class='card-content'><span class='card-title'>Temporary Classes (Date: $fdate)</span>";
 if($temp->num_rows > 0) {
 	echo "<table class='bordered responsive-table'>";

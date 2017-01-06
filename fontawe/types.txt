@@ -1,0 +1,21 @@
+check
+clock-o
+download
+envelope-o
+file-o
+film
+gear cog
+glass
+heart
+home
+inbox
+music
+power-off
+refresh
+road
+search search-minus search-plus
+signal
+star star-o
+times
+trash-o
+user

@@ -1,16 +1,17 @@
 <?php $access = array(1); ?>
 <?php include 'include/header.inc.php' ?>
+<?php $faculty_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id']; ?>
 	<div class="container">
 		<section>
 			<div class="row">
 				<div class="col s12 m8 offset-m2">
 					<div class="card z-depth-3">
 						<div class="card-content">
-							<span class="card-title">View Faculty Time Table</span>
+							<span class="card-title">View Time Table</span>
 							<form>
 								<div class="row">
 			            			<div class="input-field col s12">
-			            				<input type="hidden" name="faculty_id" id="faculty_id" value="<?php echo $g_id; ?>">
+			            				<input type="hidden" name="faculty_id" id="faculty_id" value="<?php echo $faculty_id; ?>">
 									    <select name="day" id="day">
 											<option value="" disabled selected>Choose your option</option>
 											<option value="all">All</option>

@@ -1,9 +1,16 @@
-<?php $access = array(0); ?>
 <?php
-include 'include/header.inc.php';
+include '../include/connect.inc.php';
+include '../queries.php';
+include '../functions.php';
 
-if(isset($_POST['facid']) && isset($_POST['date'])) {
-	$faculty_id = htmlentities($_POST['facid']);
+$queries = new Queries();
+$functions = new Functions();
+
+$today = $functions->currentDate();
+$time = $functions->currentTime();
+
+if(isset($_POST['faculty_id']) && isset($_POST['date'])) {
+	$faculty_id = htmlentities($_POST['faculty_id']);
 	$date = htmlentities($_POST['date']);
 	$day = $functions->calculateDayOfWeek($date);
 	$Day = $functions->capitalize($day);
@@ -16,7 +23,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 	while($r = $slots->fetch_assoc()) {
 		$slot[(int)$r['id']] = $r['start']." to ".$r['end'];
 	}
-	echo "<div class='container'><section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 blue-grey lighten-4'><div class='card-content'><span class='card-title'>$faculty_name (Day: $Day $fdate)</span>";
+	echo "<div class='container'><section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 blue-grey lighten-4'><div class='card-content'><span class='card-title'>Day: $Day $fdate</span>";
 	echo "<table class='bordered responsive-table'>";
 	echo "<thead><tr><th>Slot</th><th>Semester</th><th>Class</th><th>Subject</th><th>Manage</th></tr></thead>";
 	$i = 1;
@@ -57,10 +64,10 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 			      <h4>Day: $Day $fdate ($v[1])</h4>
 			      ";
 			echo "<table class='bordered responsive-table striped'>";
-			echo "<thead><tr><th>Faculty Id</th><th>Faculty Name</th><th>Total Classes</th><th>Last Class</th><th>Next Class</th><th>Points</th><th>Assign</th></tr></thead>";
+			echo "<thead><tr><th>Faculty Id</th><th>Faculty Name</th><th>Total Classes Today</th><th>Last Class</th><th>Next Class</th><th>Points</th><th>Assign</th></tr></thead>";
 			echo "<tbody>";
 			foreach($v[0] as $j=>$x) {
-				echo "<tr><td>$x[2]</td><td>$x[3]</td><td>$x[4]</td><td>$x[5]</td><td>$x[6]</td><td>$x[0]</td><td><button class='btn waves-effect waves-green' onclick='assignFaculty(\"$date\", \"$day\", $v[4], $v[5], $v[6], $faculty_id, \"$v[2]\", $v[3], $x[2], $i, $j);' id='asg-$i-$j'>Assign</button></td></tr>";
+				echo "<tr><td>$x[2]</td><td>$x[3]</td><td>$x[4]</td><td>$x[5]</td><td>$x[6]</td><td>$x[0]</td><td><button class='btn waves-effect waves-green' onclick='assignFaculty(\"$today\", \"$day\", $v[4], $v[5], $v[6], $faculty_id, \"$v[2]\", $v[3], $x[2], $i, $j);' id='asg-$i-$j'>Assign</button></td></tr>";
 			}
 			echo "</tbody>";
 			echo "</table>";
@@ -74,7 +81,6 @@ else {
 	header('Location:allot_class.php');
 }
 ?>
-<?php include 'include/footer.inc.php'; ?>
 <script type="text/javascript">
 	function assignFaculty(date, day, slot_id, class_id, lab_id, faculty_id, subject_id, class_type, replacement_id, btni, btnj) {
 		console.log(date+" "+day+" "+slot_id+" "+class_id+" "+lab_id+" "+faculty_id+" "+subject_id+" "+class_type+" "+replacement_id);
@@ -93,7 +99,7 @@ else {
 		function(response, status) {
 			var data = JSON.parse(response);
 			// console.log(response);
-			// console.log(data[0]+"\n"+data[1]+"\n"+data[2]);
+			console.log(data[0]+"\n"+data[1]+"\n"+data[2]);
 			swal(data[0], data[1], data[2]);
 		});
 	}

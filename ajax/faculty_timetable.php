@@ -10,7 +10,8 @@ $functions = new Functions();
 $msg = "";
 $faculty_id = htmlentities($_POST['faculty_id']);
 $day = htmlentities($_POST['day']);
-if($faculty_id == $g_id) {
+$f_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'];
+if($faculty_id == $f_id) {
 	if($day != 'all') {
 		$clsdata = array();
 		$schedule = $queries->getTimetableByFacultyDay($conn, $faculty_id, $day);

@@ -1,4 +1,5 @@
 <?php $access[] = 5; ?>
+<?php session_start(); if(isset($_SESSION['id'])) header('Location:home.php'); ?>
 <?php include 'include/header.inc.php'; ?>
 	<div class="container">
 		<section>

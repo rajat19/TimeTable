@@ -7,9 +7,8 @@ $queries = new Queries();
 $functions = new Functions();
 
 $ar = array();
-$date = htmlentities($_POST['date']);$d = explode('-', $date);
-krsort($d);
-$fdate = implode('-', $d);
+$date = htmlentities($_POST['date']);
+$fdate = $functions->prettyDateFormat($date);
 $marked = $queries->getAttendanceByDate($conn, $date);
 if($marked->num_rows > 0) {
 	echo "<section style='margin:10px;'><div class='col s8 m6 offset-m2'><div class='card z-depth-3 green lighten-4'><div class='card-content'><span class='card-title'>Attendance Marked (Date: $fdate)</span>";

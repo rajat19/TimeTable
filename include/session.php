@@ -6,8 +6,8 @@ if(empty($_SESSION['id'])) {
 	header('location:index.php');
 }
 else{
-	$g_id = $_SESSION['id'];
+	$g_userid = $_SESSION['id'];
 	$g_usertype = $_SESSION['usertype'];
-	$g_name = $_SESSION['username'];
+	$g_name = $_SESSION['name'];
 }
 ?>
