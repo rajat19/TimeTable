@@ -25,12 +25,27 @@
 .link-grey {
 	color:#777 !important;
 }
+
 #sidenav-overlay {
 	display: none;
 }
+
 .notif-date {
 	font-size: small !important;
 	color: crimson !important;
 	font-style: italic !important;
 	font-weight: bold !important;
+}
+
+.dropdown-content {
+	position: inherit !important;
+	color: white !important;
+}
+
+.dropdown-content li>a{
+	color: white !important;
+}
+
+.side-nav a {
+	color: white !important;
 }

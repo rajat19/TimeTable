@@ -221,6 +221,11 @@ class Queries {
 		return $x;
 	}
 
+	public function getUsersAllOrderByLastVisit($conn) {
+		$q = $conn->query("SELECT * FROM users ORDER BY last_visit DESC");
+		return $q;
+	}
+
 	public function getUserByEmail($conn, $email) {
 		$q = $conn->query("SELECT * FROM users WHERE email='".mysqli_real_escape_string($conn, $email)."'");
 		return $q;
@@ -306,6 +311,11 @@ class Queries {
 	/*Update queries*/
 	public function updateLeaveGrant($conn, $leave_id, $grant_date, $a) {
 		$q = $conn->query("UPDATE faculty_leave SET granted='$a', grant_date='$grant_date' WHERE id='$leave_id'");
+		return $q;
+	}
+
+	public function updateUserLastVisit($conn, $user_id, $dt) {
+		$q = $conn->query("UPDATE users SET last_visit='$dt' WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
 		return $q;
 	}
 

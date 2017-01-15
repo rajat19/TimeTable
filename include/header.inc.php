@@ -25,7 +25,7 @@
 	<?php $functions = new Functions(); ?>
 	<div class="navbar-fixed">
 		<?php if($access[0]!=5 && $g_usertype==0) { ?>
-		<ul class="dropdown-content blue-grey darken-4" id="dropdown_manage">
+		<ul class="dropdown-content blue-grey darken-3" id="dropdown_manage">
 			<li><a href="mark_attendance.php">Mark Attendance</a></li>
 			<li class="divider"></li>
 			<li><a href="view_attendance.php">View Attendance</a></li>
@@ -35,13 +35,13 @@
 			<li><a href="temp_class.php">Temporary Classes</a></li>
 		</ul>
 
-		<ul id="dropdown_leave" class="dropdown-content blue-grey darken-4">
+		<ul id="dropdown_leave" class="dropdown-content blue-grey darken-3">
 			<li><a href="mark_leave.php">Mark Leave</a></li>
 			<li class="divider"></li>
 			<li><a href="view_leave.php">View Leave</a></li>
 		</ul>
-		<!-- <ul id="dropdown_view" class="dropdown-content blue-grey darken-4"></ul> -->
-		<ul id="dropdown_addview" class="dropdown-content blue-grey darken-4">
+		<!-- <ul id="dropdown_view" class="dropdown-content blue-grey darken-3"></ul> -->
+		<ul id="dropdown_addview" class="dropdown-content blue-grey darken-3">
 			<li><a href="create_class.php">Add Class Timetable</a></li>
 	        <li class="divider"></li>
 	        <li><a href="create_lab.php">Add Lab Timetable</a></li>
@@ -54,7 +54,7 @@
 			<li class="divider"></li>
 			<li><a href="view_faculty.php">View Faculty Timetable</a></li>
 		</ul>
-		<ul class="dropdown-content blue-grey darken-4" id="dropdown_user">
+		<ul class="dropdown-content blue-grey darken-3" id="dropdown_user">
 			<li><a href="change_password.php">Change Password</a></li>
 			<li class="divider"></li>
 			<li><a href="add_faculties.php">Add Faculties</a></li>
@@ -69,9 +69,9 @@
 		</ul>
      	<?php } ?>
 
-     	<ul class="side-nav" id="mobile-demo">
+     	<ul class="side-nav blue-grey darken-3" id="mobile-demo">
      		<?php if($access[0]!=5 && $g_usertype==0) { ?>
-			<ul class="dropdown-content blue-grey darken-4" id="dropdown_manage">
+			<ul class="dropdown-content blue-grey darken-3" id="dropdown_manage">
 				<li><a href="mark_attendance.php">Mark Attendance</a></li>
 				<li class="divider"></li>
 				<li><a href="view_attendance.php">View Attendance</a></li>
@@ -80,12 +80,12 @@
 				<li class="divider"></li>
 				<li><a href="temp_class.php">Temporary Classes</a></li>
 			</ul>
-			<ul class="dropdown-content blue-grey darken-4" id="dropdown_leave">
+			<ul class="dropdown-content blue-grey darken-3" id="dropdown_leave">
 				<li><a href="mark_leave.php">Mark Leave</a></li>
 				<li class="divider"></li>
 				<li><a href="view_leave.php">View Leave</a></li>
 			</ul>
-	     	<ul id="dropdown_addview" class="dropdown-content blue-grey darken-4">
+	     	<ul id="dropdown_addview" class="dropdown-content blue-grey darken-3">
 				<li><a href="create_class.php">Add Class Timetable</a></li>
 		        <li class="divider"></li>
 		        <li><a href="create_lab.php">Add Lab Timetable</a></li>
@@ -98,7 +98,7 @@
 				<li class="divider"></li>
 				<li><a href="view_faculty.php">View Faculty Timetable</a></li>
 			</ul>
-			<ul class="dropdown-content blue-grey darken-4" id="dropdown_user">
+			<ul class="dropdown-content blue-grey darken-3" id="dropdown_user">
 				<li><a href="change_password.php">Change Password</a></li>
 				<li class="divider"></li>
 				<li><a href="add_faculties.php">Add Faculties</a></li>
@@ -119,10 +119,10 @@
 			else {
 				if($g_usertype == 0) {
 					// admin
-					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_manage">Manage Timetable<span><i class="fa fa-angle-down"></i></span></a></li>';
-					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_leave">Faculty Leave<span><i class="fa fa-angle-down"></i></span></a></li>';
-					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_addview">Timetable<span><i class="fa fa-angle-down"></i></span></a></li>';
-					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_user">Manage Settings<span><i class="fa fa-angle-down"></i></span></a></li>';
+					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_manage">Manage Timetable <span><i class="fa fa-angle-down"></i></span></a></li>';
+					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_leave">Faculty Leave <span><i class="fa fa-angle-down"></i></span></a></li>';
+					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_addview">Timetable <span><i class="fa fa-angle-down"></i></span></a></li>';
+					echo '<li><a href="#!" class="dropdown-button" data-activates="dropdown_user">Manage Settings <span><i class="fa fa-angle-down"></i></span></a></li>';
 				}
 				if($g_usertype == 1) {
 					// faculty

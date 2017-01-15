@@ -22,11 +22,11 @@ else {
 			$name = $row['name'];
 			$id = $row['id'];
 			$usertype = $row['usertype'];
+			$dt = $functions->currentDateTime();
+			$q = $queries->updateUserLastVisit($conn, $id, $dt);
 			$_SESSION['id'] = $id;
 			$_SESSION['usertype'] = $usertype;
 			$_SESSION['name'] = $name;
-			// echo "<script>swal('Welcome $name')</script>";
-			// header('Location:../home.php');
 			$arr = array();
 			$arr[0] = "Welcome";
 			$arr[1] = "$name";

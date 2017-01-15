@@ -12,14 +12,15 @@
 			            	if(count($x) > 0) {
 			            		echo '<ul class="collection">';
 			            		foreach($x as $notif) {
+			            			
+			            			echo '<li class="avatar collection-item">';
 			            			echo '<a class="link-grey" href="#!">';
-			            			echo '<li class="avatar collection-item">
-			            			<img src="images/akgec.png" class="circle">
+			            			echo '<img src="images/akgec.png" class="circle">
 			            			<span class="title">'.$notif[0].'</span>
 									<p>'.$notif[3].'</p>
-									<p><span class="notif-date">'.$notif[1].' '.$notif[2].'</span></p>
-			            			</li>';
-			            			echo "</a>";	
+									<p><span class="notif-date">'.$notif[1].' '.$notif[2].'</span></p>';
+			            			echo "</a>";
+			            			echo '</li>';
 			            		}
 			            		echo '</ul>';
 			            	}

@@ -50,6 +50,10 @@ class Functions {
 		return date('d-m-Y');
 	}
 
+	public function currentDateTime() {
+		return date('Y-m-d H:i:s', strtotime('+4 hours 30 minutes'));
+	}
+
 	public function currentDateYmd() {
 		return date('Y-m-d', strtotime('+4 hours 30 minutes'));
 	}
@@ -379,7 +383,7 @@ class Functions {
 			case 6:
 				$x = ($arr[0]==1)?"granted":"rejected";
 				$date = $this->prettyDateFormat($arr[1]);
-				$s = "Your leave had been $x for date $date ";
+				$s = "Your leave had been $x for $date ";
 				break;
 			case 7:
 				$s = "$arr[0] had been substitued with $arr[1] for duration $arr[2] ";
