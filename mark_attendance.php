@@ -54,6 +54,7 @@
 			faculty_id: faculty_id,
 		},
 		function(response, status) {
+			// console.log(response);
 			var data = JSON.parse(response);
 			console.log(data[0]+"\n"+data[1]+"\n"+data[2]+"\n"+status);
 			swal(data[0], data[1], data[2]);

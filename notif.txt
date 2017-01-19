@@ -48,9 +48,9 @@ When to notify-
 
 What to notify(sentences)-
 d A1. _FACULTY requested a leave for _DATE
-A2. _COUNT faculties have still not marked their attendance. View here @view_attendance
+d A2. _COUNT faculties have still not marked their attendance. View here @view_attendance
 A3. _FACULTY had still not reached class _CLASS
-A4. _REPLACEMENT had (accepted/rejected) substitution given for _CLASS during _TIME for replacing _FACULTY
+d A4. _REPLACEMENT had (accepted/rejected) substitution given for _CLASS during _TIME for replacing _FACULTY
 d B1. You have been assigned a substitution for _CLASS on _DATE during _TIME in replacement to _FACULTY. View here @substitution_status
 d B2. Your leave had been (granted/rejected) for date _DATE
 C1. _FACULTY had been substitued with _REPLACEMENT for duration _TIME

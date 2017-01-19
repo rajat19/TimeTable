@@ -23,10 +23,16 @@ if($facultiesonleave->num_rows > 0){
 		$dept = $row['department'];
 		$leavefac[] = $facid;
 		$granted = $row['granted'];
+		$ifclasstoday = $queries->getTimetableByFacultyDay($conn, $facid, $day)->num_rows;
 		echo "<tr><td>$facname</td><td>$dept</td>";
-		if($granted == 1) echo "<td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
-		else if($granted == 0) echo "<td>Leave Pending</td>";
-		else echo "<td></td>";
+		if($ifclasstoday > 0) {
+			if($granted == 1) echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
+			else if($granted == 0) echo "<td>Leave Pending</td>";
+			else echo "<td></td>";
+		}
+		else {
+			echo "<td>No class Today</td>";
+		}
 		echo "</tr>";
 	}
 	echo "</table>";
@@ -46,9 +52,15 @@ if($today == $date) {
 			$facid = $row['id'];
 			$facname = $row['name'];
 			$dept = $row['department'];
-
+			$ifclasstoday = $queries->getTimetableByFacultyDay($conn, $facid, $day)->num_rows;
 			if(!in_array($facid, $leavefac)) {
-				echo "<tr><td>$facname</td><td>$dept</td><td><form action='manage_schedule.php' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";
+				echo "<tr><td>$facname</td><td>$dept</td>";
+				if($ifclasstoday > 0) {
+					echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";	
+				}
+				else {
+					echo "<td>No class today</td>";
+				}
 			}
 		}
 		echo "</table>";

@@ -16,6 +16,14 @@ $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
 if($cm) {
 	$q = $queries->addAttendanceFaculty($conn, $faculty_id, $today, $time, $day);
 	if($q==1) {
+		$ifalreadycounted = $queries->getNotificationByDateType($conn, $today, 2);
+		if($ifalreadycounted->num_rows == 0) {
+			$set = $functions->setNotificationA2($conn, $queries, 0);
+		}
+		else {
+			$notification_id = $ifalreadycounted->fetch_assoc()['id'];
+			$set = $functions->setNotificationA2($conn, $queries, $notification_id);
+		}
 		$arr = array();
 		$arr[0] = "Attendance Marked";
 		$arr[1] = "";

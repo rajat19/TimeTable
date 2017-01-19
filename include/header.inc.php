@@ -11,6 +11,7 @@
 </head>
 <body>
 	<?php require 'include/connect.inc.php'; ?>
+	<?php include "phpjs/firepjs.php"; ?>
 	<?php
 		if($access[0] != 5) {
 			require 'include/session.php';

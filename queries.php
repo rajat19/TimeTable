@@ -138,7 +138,12 @@ class Queries {
 
 	public function getLeavesAll($conn, $leave_date) {
 		$q = $conn->query("SELECT * FROM faculty_leave WHERE leave_date='$leave_date'");
-		return $q;	
+		return $q;
+	}
+
+	public function getNotificationByDateType($conn, $date, $notification_type) {
+		$q = $conn->query("SELECT * FROM notifications WHERE date='$date' AND notification_type='$notification_type'");
+		return $q;
 	}
 
 	public function getNotificationsByUser($conn, $user_id) {
@@ -176,8 +181,18 @@ class Queries {
 		return $q;
 	}
 
+	public function getSubstitutionByReplacement($conn, $faculty_id) {
+		$q = $conn->query("SELECT * FROM substitutions WHERE replacement_id='".mysqli_real_escape_string($conn, $faculty_id)."'");
+		return $q;
+	}
+
 	public function getSubstitutionByReplacementDateSlot($conn, $faculty_id, $date, $slot_id) {
 		$q = $conn->query("SELECT * FROM substitutions WHERE replacement_id='".mysqli_real_escape_string($conn, $faculty_id)."' AND date='".mysqli_real_escape_string($conn, $date)."' AND slot_id='".mysqli_real_escape_string($conn, $slot_id)."'");
+		return $q;
+	}
+
+	public function getSubstitutionByReplacementAfterDate($conn, $faculty_id, $date) {
+		$q = $conn->query("SELECT * FROM substitutions WHERE replacement_id='".mysqli_real_escape_string($conn, $faculty_id)."' AND date>='".mysqli_real_escape_string($conn, $date)."' ");
 		return $q;
 	}
 
@@ -311,6 +326,16 @@ class Queries {
 	/*Update queries*/
 	public function updateLeaveGrant($conn, $leave_id, $grant_date, $a) {
 		$q = $conn->query("UPDATE faculty_leave SET granted='$a', grant_date='$grant_date' WHERE id='$leave_id'");
+		return $q;
+	}
+
+	public function updateNotification($conn, $notification_id, $date, $time, $details) {
+		$q = $conn->query("UPDATE notifications SET date='$date', time='$time', details='$details' WHERE id='$notification_id'");
+		return $q;
+	}
+
+	public function updateSubstitution($conn, $substitution_id, $a) {
+		$q = $conn->query("UPDATE substitutions SET accepted='$a' WHERE id='$substitution_id'");
 		return $q;
 	}
 

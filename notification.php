@@ -1,5 +1,38 @@
 <?php $access = array(0, 1, 2); ?>
 <?php include 'include/header.inc.php'; ?>
+<?php
+	$per_page = 4; // number of results to show per page
+	$x = $functions->displayNotifications($conn, $queries, $g_userid);
+	$total_results = count($x);
+	$total_pages = ceil($total_results / $per_page);//total pages we going to have
+	//-------------if page is setcheck------------------//
+	if (isset($_GET['page'])) {
+		$show_page = $_GET['page']; //current page
+		if ($show_page > 0 && $show_page <= $total_pages) {
+			$start = ($show_page - 1) * $per_page;
+			$end = $start + $per_page;
+		}
+		else {
+		// error - show first set of results
+			$start = 0;
+			$end = $per_page;
+		}
+		$page = intval($_GET['page']);
+	}
+	else {
+		// if page isn't set, show first set of results
+		$start = 0;
+		$end = $per_page;
+		$page = 1;
+	}
+	// display pagination
+	
+	$tpages=$total_pages;
+	if ($page <= 0)
+		$page = 1;
+
+	$reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages;
+?>
 	<div class="container">
 		<section>
 			<div class="row">
@@ -8,11 +41,15 @@
 			            <div class="card-content">
 			            <span class="card-title">Notifications</span>
 			            <?php
-			            	$x = $functions->displayNotifications($conn, $queries, $g_userid);
+			            	// $x = $functions->displayNotifications($conn, $queries, $g_userid);
 			            	if(count($x) > 0) {
 			            		echo '<ul class="collection">';
-			            		foreach($x as $notif) {
-			            			
+			            		// foreach($x as $notif) {
+			            		for ($i = $start; $i < $end; $i++) {
+			            			if ($i == $total_results) {
+										break;
+									}
+									$notif = $x[$i];
 			            			echo '<li class="avatar collection-item">';
 			            			echo '<a class="link-grey" href="#!">';
 			            			echo '<img src="images/akgec.png" class="circle">
@@ -25,6 +62,12 @@
 			            		echo '</ul>';
 			            	}
 			            	else echo "No notifications yet";
+
+			            	echo '<div class="pagination"><ul>';
+							if ($total_pages > 1) {
+								echo $functions->paginate($reload, $show_page, $total_pages);
+							}
+							echo "</ul></div>";
 			            ?>
 			            </div>
 			        </div>

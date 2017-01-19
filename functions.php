@@ -51,15 +51,18 @@ class Functions {
 	}
 
 	public function currentDateTime() {
-		return date('Y-m-d H:i:s', strtotime('+4 hours 30 minutes'));
+		date_default_timezone_set('Asia/Kolkata');
+		return date('Y-m-d H:i:s', time());
 	}
 
 	public function currentDateYmd() {
-		return date('Y-m-d', strtotime('+4 hours 30 minutes'));
+		date_default_timezone_set('Asia/Kolkata');
+		return date('Y-m-d', time());
 	}
 
 	public function currentTime() {
-		return date('H:i:s', strtotime('+4 hours 30 minutes'));
+		date_default_timezone_set('Asia/Kolkata');
+		return date('H:i:s', time());
 	}
 
 	public function prettyDateFormat($date) {
@@ -401,12 +404,18 @@ class Functions {
 		$this->createNotification($conn, $queries, 1, 0, $admin, $faculty_userid, $string);
 	}
 
-	public function setNotificationA2($conn, $queries) {
+	public function setNotificationA2($conn, $queries, $addOrUpdate) {
+		$date = $this->currentDateYmd();
 		$q = $queries->getFacultiesByAttendanceNotMarked($conn, $date);
 		$count = $q->num_rows;
 		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
 		$string = implode('$$', array($count));
-		$this->createNotification($conn, $queries, 2, 0, $admin, '', $string);		
+		if($addOrUpdate == 0) {
+			$this->createNotification($conn, $queries, 2, 0, $admin, '', $string);
+		}
+		else {
+			$this->updateNotification($conn, $queries, $addOrUpdate, $string);	
+		}
 	}
 
 	public function setNotificationA3($conn, $queries, $faculty_id, $cr_id, $class_id) {
@@ -428,6 +437,7 @@ class Functions {
 		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
 		$facname = $fdetails['title']." ".$fdetails['name'];
 		$lab_id = $sub['lab_id'];
+		$class_id = $sub['class_id'];
 		$c = $this->getClassName($conn, $queries, $class_id);
 		if($lab_id!=0) {
 			$location = $queries->getLabById($conn, $lab_id)->fetch_assoc()['name'];
@@ -484,6 +494,55 @@ class Functions {
 		$string = implode('$$', array($facname, $repname, $slot));
 		$this->createNotification($conn, $queries, 7, 2, $cr_id, $admin, $string);
 	}
+
+	public function updateNotification($conn, $queries, $notification_id, $string) {
+		$date = $this->currentDateYmd();
+		$time = $this->currentTime();
+		$q = $queries->updateNotification($conn, $notification_id, $date, $time, $string);
+	}
 /*.Notification functions*/
+
+/*Pagination functions*/
+	function paginate($reload, $page, $tpages) {
+		$adjacents = 2;
+		$prevlabel = "&lsaquo; Prev";
+		$nextlabel = "Next &rsaquo;";
+		$out = "";
+		// previous
+		if ($page == 1) {
+			$out.= "<span>".$prevlabel."</span>\n";
+		} elseif ($page == 2) {
+			$out.="<li><a href=\"".$reload."\">".$prevlabel."</a>\n</li>";
+		} else {
+			if($page<1) $page=1;
+			$out.="<li><a href=\"".$reload."&page=".($page - 1)."\">".$prevlabel."</a>\n</li>";
+		}
+		$pmin=($page>$adjacents)?($page - $adjacents):1;
+		$pmax=($page<($tpages - $adjacents))?($page + $adjacents):$tpages;
+		for ($i = $pmin; $i <= $pmax; $i++) {
+			if ($i == $page) {
+				$out.= "<li class=\"active\"><a href=''>".$i."</a></li>\n";
+			} elseif ($i == 1) {
+				$out.= "<li><a href=\"".$reload."\">".$i."</a>\n</li>";
+			} else {
+				$out.= "<li><a href=\"".$reload. "&page=".$i."\">".$i. "</a>\n</li>";
+			}
+		}
+
+		if ($page<($tpages - $adjacents)) {
+			$out.= "<a href=\"" . $reload."&page=".$tpages."\">" .$tpages."</a>\n";
+		}
+		// next
+		if ($page <= $tpages) {
+			if($page==$tpages) $page = $page-1;
+			$out.= "<li><a href=\"".$reload."&page=".($page + 1)."\">".$nextlabel."</a>\n</li>";
+		} else {
+			$out.= "<span>".$nextlabel."</span>\n";
+		}
+		$out.= "";
+		return $out;
+	}
+/*.Pagination functions*/
+
 }
 ?>

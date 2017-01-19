@@ -21,7 +21,7 @@ if($temp->num_rows > 0) {
 		$replacementname = $queries->getFacultyById($conn, $replacementid)->fetch_assoc()['name'];
 		$slot_id = $row['slot_id'];
 		$slot = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
-		$slotname = $slot['start']." to ".$slot['end'];
+		$slotname = $functions->prettyTimeFormat($slot['start'])." to ".$functions->prettyTimeFormat($slot['end']);
 		$subject_id = $row['subject_id'];
 		$class_type = ($row['class_type'])?'Class':'Lab';
 		$subject_name = $queries->getSubjectById($conn, $subject_id)->fetch_assoc()['subject_name'];

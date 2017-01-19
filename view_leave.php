@@ -53,27 +53,28 @@
 			$('#schedule').html(response);
 		});
 	});
-		function accept(lid) {
-			var a = 1;
-			$.post("ajax/grant_leave.php", {
-				leave_id: lid,
-				a: a
-			},
-			function (response, status) {
-				$('#x-'+lid).html(response);
-			});
-		}
+	
+	function accept(lid) {
+		var a = 1;
+		$.post("ajax/grant_leave.php", {
+			leave_id: lid,
+			a: a
+		},
+		function (response, status) {
+			$('#x-'+lid).html(response);
+		});
+	}
 
-		function reject(lid) {
-			var a = -1;
-			$.post("ajax/grant_leave.php", {
-				leave_id: lid,
-				a: a
-			},
-			function (response, status) {
-				$('#x-'+lid).html(response);
-			});
-		}
+	function reject(lid) {
+		var a = -1;
+		$.post("ajax/grant_leave.php", {
+			leave_id: lid,
+			a: a
+		},
+		function (response, status) {
+			$('#x-'+lid).html(response);
+		});
+	}
 </script>
 </body>
 </html>

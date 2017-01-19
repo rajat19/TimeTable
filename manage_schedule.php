@@ -14,12 +14,12 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 	$schedule = $queries->getTimetableByFacultyDay($conn, $faculty_id, $day);
 	$slots = $queries->getSlotsAll($conn);
 	while($r = $slots->fetch_assoc()) {
-		$slot[(int)$r['id']] = $r['start']." to ".$r['end'];
+		$slot[(int)$r['id']] = $functions->prettyTimeFormat($r['start'])." to ".$functions->prettyTimeFormat($r['end']);
 	}
 	echo "<div class='container'><section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 blue-grey lighten-4'><div class='card-content'><span class='card-title'>$faculty_name (Day: $Day $fdate)</span>";
+	$i = 1;
 	echo "<table class='bordered responsive-table'>";
 	echo "<thead><tr><th>Slot</th><th>Semester</th><th>Class</th><th>Subject</th><th>Manage</th></tr></thead>";
-	$i = 1;
 	if($schedule->num_rows > 0) {
 		while($row = $schedule->fetch_assoc()) {
 			$slot_id = $row['slot_id'];
@@ -31,11 +31,18 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 			$sect = $cdetails['section'];
 			$subject_id = $row['subject_id'];
 			$ct = ($class_type==0)?" (LAB) ":"";
+			$alreadyassigned = $queries->getSubstitutionByFacultyDateSlot($conn, $faculty_id, $date, $slot_id);
 			while($slot_id > $i) $i++;
-			echo "<tr><td>$slot[$i]</td><td>$sem</td><td>$sect</td><td>$subject_id$ct</td><td><form><input type='hidden' name='day' value='$day'><input type='hidden' name='slot_id' value='$slot_id'><input type='hidden' name='class_type' value='$class_type'>";
+			echo "<tr><td>$slot[$i]</td><td>$sem</td><td>$sect</td><td>$subject_id$ct</td>";
+			echo "<td><form><input type='hidden' name='day' value='$day'><input type='hidden' name='slot_id' value='$slot_id'><input type='hidden' name='class_type' value='$class_type'>";
 			if($class_type==1)
 				echo "<input type='hidden' name='class_id' value='$class_id'>";
-			echo"</form><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></td></tr>";
+			if($alreadyassigned->num_rows > 0) {
+				echo"</form><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></td></tr>";
+			}
+			else {
+				echo"</form><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></td></tr>";	
+			}
 			if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
 			if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
 			$facs = $functions->prioritizeFaculties($conn, $queries, $facs, $day, $slot_id);
