@@ -171,7 +171,9 @@
 		      				}
 
 		      				if($g_usertype == 2) {
-
+		      					echo '<li><a href="schedule.php">Today\'s Schedule</a></li>';
+		      					echo '<li><a href="report.php">Notify Admin</a></li>';
+		      					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
 		      				}
 		      				echo '<li><a href="notification.php">Notifications</a></li>';
 		      				echo '<li><a href="logout.php">Logout</a></li>';

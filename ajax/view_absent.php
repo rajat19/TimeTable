@@ -28,7 +28,8 @@ if($facultiesonleave->num_rows > 0){
 		if($ifclasstoday > 0) {
 			if($granted == 1) echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
 			else if($granted == 0) echo "<td>Leave Pending</td>";
-			else echo "<td></td>";
+			else echo "<td>Leave not Granted</td>";
+			// else echo "<td></td>";
 		}
 		else {
 			echo "<td>No class Today</td>";

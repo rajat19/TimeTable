@@ -35,6 +35,11 @@ class Queries {
 		return $q;	
 	}
 
+	public function getClassByUserId($conn, $g_userid) {
+		$q = $conn->query("SELECT * FROM classes WHERE cr_id='$g_userid'");
+		return $q;
+	}
+
 	public function getClassesAll($conn) {
 		$q = $conn->query("SELECT * FROM classes");
 		return $q;
@@ -193,6 +198,11 @@ class Queries {
 
 	public function getSubstitutionByReplacementAfterDate($conn, $faculty_id, $date) {
 		$q = $conn->query("SELECT * FROM substitutions WHERE replacement_id='".mysqli_real_escape_string($conn, $faculty_id)."' AND date>='".mysqli_real_escape_string($conn, $date)."' ");
+		return $q;
+	}
+
+	public function getSubstitutionByReplacementBeforeDate($conn, $faculty_id, $date) {
+		$q = $conn->query("SELECT * FROM substitutions WHERE replacement_id='".mysqli_real_escape_string($conn, $faculty_id)."' AND date<'".mysqli_real_escape_string($conn, $date)."' ");
 		return $q;
 	}
 

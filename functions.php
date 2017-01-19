@@ -324,7 +324,7 @@ class Functions {
 1 = A1            5 = B1 
 2 = A2            6 = B2
 3 = A3            7 = C1
-4 = A4
+4 = A4 			  8 = B3
 */
 	public function checkNotification($conn, $queries, $user_id) {
 		$q = $queries->getNotificationsByUser($conn, $user_id);
@@ -447,7 +447,7 @@ class Functions {
 		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
 		$accepted = $sub['accepted'];
 		$s = $queries->getSlotById($conn, $sub['slot_id'])->fetch_assoc();
-		$slot = $s['start']." to ".$s['end'];
+		$slot = $this->prettyTimeFormat($s['start'])." to ".$this->prettyTimeFormat($s['end']);
 		$string = implode('$$', array($repname, $accepted, $class, $slot, $facname));
 		$this->createNotification($conn, $queries, 4, 0, $admin, $faculty_id, $string);
 	}
@@ -482,15 +482,19 @@ class Functions {
 		$this->createNotification($conn, $queries, 6, 1, $faculty_userid, $admin, $string);	
 	}
 
-	public function setNotificationC1($conn, $queries, $faculty_id, $replacement_id, $slot_id, $class_id) {
+	public function setNotificationC1($conn, $queries, $substitution_id) {
+		$sub = $queries->getSubstitutionById($conn, $substitution_id)->fetch_assoc();
+		$replacement_id = $sub['replacement_id'];
 		$rdetails = $queries->getFacultyById($conn, $replacement_id)->fetch_assoc();
 		$repname = $rdetails['title']." ".$rdetails['name'];
+		$faculty_id = $sub['faculty_id'];
 		$fdetails = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
 		$facname = $fdetails['title']." ".$fdetails['name'];
-		$s = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
-		$slot = $s['start']." to ".$s['end'];
+		$s = $queries->getSlotById($conn, $sub['slot_id'])->fetch_assoc();
+		$slot = $this->prettyTimeFormat($s['start'])." to ".$this->prettyTimeFormat($s['end']);
 		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
-		$cr_id = $queries->getClassById($class_id)->fetch_assoc()['cr_id'];
+		$class_id = $sub['class_id'];
+		$cr_id = $queries->getClassById($conn, $class_id)->fetch_assoc()['cr_id'];
 		$string = implode('$$', array($facname, $repname, $slot));
 		$this->createNotification($conn, $queries, 7, 2, $cr_id, $admin, $string);
 	}

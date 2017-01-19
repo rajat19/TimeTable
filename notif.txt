@@ -43,7 +43,7 @@ When to notify-
 4. A4. when faculty accepted rejected substitution (0 none 1 accept -1 reject)
 5. B1. when admin through algo assigns a substitution to a faculty
 6. B2. when admin accepts rejects leave (0 none 1 granted -1 not granted)
-7. C1. when admin gets notification that faculty accepted rejected substitution
+7. C1. when admin gets notification that faculty accepted substitution
 8. B3. when faculty requested for substitution for particular slots
 
 What to notify(sentences)-
@@ -53,5 +53,5 @@ A3. _FACULTY had still not reached class _CLASS
 d A4. _REPLACEMENT had (accepted/rejected) substitution given for _CLASS during _TIME for replacing _FACULTY
 d B1. You have been assigned a substitution for _CLASS on _DATE during _TIME in replacement to _FACULTY. View here @substitution_status
 d B2. Your leave had been (granted/rejected) for date _DATE
-C1. _FACULTY had been substitued with _REPLACEMENT for duration _TIME
+d C1. _FACULTY had been substitued with _REPLACEMENT for duration _TIME
 B3. _FACULTY had requested for substitution in _CLASS on _DATE during _TIME

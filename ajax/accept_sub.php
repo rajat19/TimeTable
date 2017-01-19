@@ -15,7 +15,10 @@ if($substitution_date >= $today) {
 	$q = $queries->updateSubstitution($conn, $substitution_id, $a);
 	if($q == 1) {
 		$functions->setNotificationA4($conn, $queries, $substitution_id);
-		if($a == 1) echo "Accepted";
+		if($a == 1) {
+			$functions->setNotificationC1($conn, $queries, $substitution_id);
+			echo "Accepted";
+		}
 		else echo "Rejected";
 	}
 	else echo "<script>swal('Error', 'Problem accepting/rejecting substitution', 'warning')</script>";
