@@ -32,7 +32,7 @@ if($facultiesonleave->num_rows > 0){
 			// else echo "<td></td>";
 		}
 		else {
-			echo "<td>No class Today</td>";
+			echo "<td>No class on this day</td>";
 		}
 		echo "</tr>";
 	}
@@ -60,7 +60,7 @@ if($today == $date) {
 					echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td></tr>";	
 				}
 				else {
-					echo "<td>No class today</td>";
+					echo "<td>No class on this day</td>";
 				}
 			}
 		}

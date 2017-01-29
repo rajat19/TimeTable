@@ -50,14 +50,12 @@
 	$('#viewfaculty').click(function() {
 		var faculty_id = $('#faculty_id').val();
 		var day = $('#day').val();
-		console.log(faculty_id+"/"+day);
-		$.post("ajax/view_faculty.php",
+		$.post("ajax/faculty_timetable.php",
 		{
 			faculty_id: faculty_id,
 			day: day
 		},
 		function(response, status) {
-			console.log(response);
 			$('#schedule').show();	
 			$('#schedule').html(response);
 		});

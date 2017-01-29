@@ -7,9 +7,10 @@
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
 	<link rel="stylesheet" type="text/css" href="fontawe/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="css/materialize.clockpicker.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
-<body>
+<body class="blue-grey lighten-3">
 	<?php require 'include/connect.inc.php'; ?>
 	<?php include "phpjs/firepjs.php"; ?>
 	<?php
@@ -60,6 +61,10 @@
 			<li class="divider"></li>
 			<li><a href="add_faculties.php">Add Faculties</a></li>
 			<li class="divider"></li>
+			<li><a href="add_cr.php">Add Class Representatives</a></li>
+			<li class="divider"></li>
+			<li><a href="set_timelimit.php">Set Time Limit</a></li>
+			<li class="divider"></li>
 			<!-- <li><a href="edit_faculties.php">Edit Faculties</a></li>
 			<li class="divider"></li>
 			<li><a href="delete_faculties.php">Delete Faculties</a></li>
@@ -103,6 +108,10 @@
 				<li><a href="change_password.php">Change Password</a></li>
 				<li class="divider"></li>
 				<li><a href="add_faculties.php">Add Faculties</a></li>
+				<li class="divider"></li>
+				<li><a href="add_cr.php">Add Class Representatives</a></li>
+				<li class="divider"></li>
+				<li><a href="set_timelimit.php">Set Time Limit</a></li>
 				<li class="divider"></li>
 				<!-- <li><a href="edit_faculties.php">Edit Faculties</a></li>
 				<li class="divider"></li>

@@ -1,6 +1,7 @@
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
 	<script type="text/javascript" src="js/materialize.min.js"></script>
+	<script type="text/javascript" src="js/materialize.clockpicker.js"></script>
 	<script type="text/javascript" src="js/pagination.min.js"></script>
 	<script type="text/javascript" src="js/sweetalert.min.js"></script>
 	<script type="text/javascript">
@@ -19,6 +20,16 @@
 				formatSubmit: 'yyyy-mm-dd',
 				hiddenName: true,
 			});
+
+			$('.timepicker').pickatime({
+			    default: 'now',
+			    twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+			    donetext: 'Done',
+			    darktheme: true,
+			  	autoclose: false,
+			  	vibrate: true // vibrate the device when dragging clock hand
+			});
+
 			$('#pagination-short').materializePagination({
 				align: 'center',
 				lastPage:  3,

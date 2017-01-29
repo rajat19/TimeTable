@@ -32,6 +32,7 @@ if($faculty_id == $f_id) {
 				$sect = $cdetails['section'];
 				$class_type = $row['class_type'];
 				$subject_id = $row['subject_id'];
+				$class_location = $cdetails['location'];
 				$faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
 				$cls;
 				if($class_type == 0) {
@@ -42,7 +43,7 @@ if($faculty_id == $f_id) {
 					$cls = array($class_type, $subject_id, $sem, $sect, $lab_name, $batch_name);
 				}
 				else
-					$cls = array($class_type, $subject_id, $sem, $sect);
+					$cls = array($class_type, $subject_id, $sem, $sect, $class_location);
 				array_push($clsdata, $cls);
 				while($slot_id != $i) {
 					echo "<td></td>";
@@ -65,10 +66,7 @@ if($faculty_id == $f_id) {
 			echo "<thead><tr><th>Subject</th><th>Semester</th><th>Section</th><th>Venue</th></tr></thead>";
 			echo "<tbody>";
 			foreach($clsdata as $fac) {
-				echo "<tr><td>$fac[1]</td><td>$fac[2]</td><td>$fac[3]</td><td>";
-				if($fac[0]==0) echo "$fac[4]";
-				else echo "";
-				echo "</td></tr>";
+				echo "<tr><td>$fac[1]</td><td>$fac[2]</td><td>$fac[3]</td><td>$fac[4]</td></tr>";
 			}
 			echo "</tbody>";
 			echo "</table>";
@@ -102,6 +100,7 @@ if($faculty_id == $f_id) {
 					$sect = $cdetails['section'];
 					$class_type = $row['class_type'];
 					$subject_id = $row['subject_id'];
+					$class_location = $cdetails['location'];
 					$faculty_name = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc()['name'];
 					$cls;
 					if($class_type == 0) {
@@ -111,8 +110,9 @@ if($faculty_id == $f_id) {
 						$batch_name = $queries->getBatchById($batch);
 						$cls = array($class_type, $subject_id, $sem, $sect, $lab_name);
 					}
-					else
-						$cls = array($class_type, $subject_id, $sem, $sect);
+					else {
+						$cls = array($class_type, $subject_id, $sem, $sect, $class_location);
+					}
 					$cls = implode('$', $cls);
 					array_push($clsdata, $cls);
 					while($slot_id != $i) {
@@ -141,10 +141,7 @@ if($faculty_id == $f_id) {
 		echo "<tbody>";
 		foreach($clsdata as $c) {
 			$fac = explode('$', $c);
-			echo "<tr><td>$fac[1]</td><td>$fac[2]</td><td>$fac[3]</td><td>";
-			if($fac[0]==0) echo "$fac[4]";
-			else echo "";
-			echo "</td></tr>";
+			echo "<tr><td>$fac[1]</td><td>$fac[2]</td><td>$fac[3]</td><td>$fac[4]</td></tr>";
 		}
 		echo "</tbody>";
 		echo "</table>";

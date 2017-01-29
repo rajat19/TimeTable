@@ -156,6 +156,16 @@ class Queries {
 		return $q;
 	}
 
+	public function getSettingByType($conn, $type) {
+		$q = $conn->query("SELECT * FROM settings WHERE type='$type'");
+		return $q;
+	}
+
+	public function getSettingsAll($conn) {
+		$q = $conn->query("SELECT * FROM settings");
+		return $q;
+	}
+
 	public function getSlotById($conn, $slot_id) {
 		$q = $conn->query("SELECT * FROM slots WHERE id='".mysqli_real_escape_string($conn, $slot_id)."'");
 		return $q;
@@ -173,6 +183,11 @@ class Queries {
 
 	public function getSubstitutionById($conn, $id) {
 		$q = $conn->query("SELECT * FROM substitutions WHERE id='$id'");
+		return $q;
+	}
+
+	public function getSubstitutionByClassDate($conn, $class_id, $date) {
+		$q = $conn->query("SELECT * FROM substitutions WHERE date='$date' AND class_id='$class_id'");
 		return $q;
 	}
 
@@ -341,6 +356,11 @@ class Queries {
 
 	public function updateNotification($conn, $notification_id, $date, $time, $details) {
 		$q = $conn->query("UPDATE notifications SET date='$date', time='$time', details='$details' WHERE id='$notification_id'");
+		return $q;
+	}
+
+	public function updateSetting($conn, $type, $value) {
+		$q = $conn->query("UPDATE settings SET value='".mysqli_real_escape_string($conn, $value)."' WHERE type='$type'");
 		return $q;
 	}
 

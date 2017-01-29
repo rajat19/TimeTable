@@ -16,7 +16,7 @@
 										$res = $queries->getClassesAll($conn);
 										if($res->num_rows > 0) {
 											while($row = $res->fetch_assoc()) {
-												echo "<option value='".$row['id']."'>".$row['branch']." ".$row['year']." year ".$row['section']."</option>";
+												echo "<option value='".$row['id']."'>".$functions->getClassName($conn, $queries, $row['id'])[0]."</option>";
 											}
 										}
 										?>
@@ -71,7 +71,6 @@
 			day: day
 		},
 		function(response, status) {
-			console.log(response);
 			$('#schedule').show();	
 			$('#schedule').html(response);
 		});

@@ -11,9 +11,16 @@ $faculty_id = htmlentities($_POST['faculty_id']);
 $today = $functions->currentDateYmd();
 $time = $functions->currentTime();
 $day = $functions->calculateDayOfWeek($today);
-// echo "$today $time $day";
+$timelimit = $queries->getSettingByType($conn, 'timelimit')->fetch_assoc();
 $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
-if($cm) {
+if($timelimit['value']<$time) {
+		$arr = array();
+		$arr[0] = "Attendance Not Marked";
+		$arr[1] = "Exceeded the time to mark attendance";
+		$arr[2] = "warning";
+		echo json_encode($arr);
+}
+else if($cm) {
 	$q = $queries->addAttendanceFaculty($conn, $faculty_id, $today, $time, $day);
 	if($q==1) {
 		$ifalreadycounted = $queries->getNotificationByDateType($conn, $today, 2);

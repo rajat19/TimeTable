@@ -7,15 +7,14 @@ $queries = new Queries();
 $functions = new Functions();
 
 $msg = "";
-// $class_id = htmlentities($_POST['class_id']);
-// $day = htmlentities($_POST['day']);
 $class_id = htmlentities($_POST['class_id']);
 $day = htmlentities($_POST['day']);
+$class_location = $queries->getClassById($conn, $class_id)->fetch_assoc()['location'];
 if($day != 'all') {
 	$facdata = array(); $labdata = array();
 	$schedule = $queries->getTimetableByClassDay($conn, $class_id, $day);
 	if($schedule->num_rows > 0) {
-		echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3'><div class='card-content'><span class='card-title'>Time Table</span>";
+		echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3'><div class='card-content'><span class='card-title'>Time Table ($class_location)</span>";
 		echo "<table class='bordered responsive-table striped'>";
 		echo "<thead><tr><th>Day</th><th>8:30 - 9:20</th><th>9:20 - 10:10</th><th>10:10 - 11:00</th><th>11:00 - 11:50</th><th>11:50 - 12:40</th><th>12:40 - 13:30</th><th>13:30 - 14:20</th><th>14:20 - 15:10</th><th>15:10 - 16:00</th></tr></thead>";
 		$i = 1;
@@ -57,7 +56,7 @@ if($day != 'all') {
 			// else echo "<td>$subject_id</td>";
 			// if($l%2==1) $i++;
 			if($oldslot != $slot_id) {
-				if($class_type==0) echo "<td>$subject_id<br>$batch_name</td>";
+				if($class_type==0) echo "<td>LAB</td>";
 				else {
 					echo "<td>$subject_id</td>";
 					$i++;
@@ -111,7 +110,7 @@ if($day != 'all') {
 
 // day == all
 else {
-	echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3'><div class='card-content'><span class='card-title'>Time Table</span>";
+	echo "<section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3'><div class='card-content'><span class='card-title'>Time Table ($class_location)</span>";
 		echo "<table class='bordered responsive-table striped'>";
 		echo "<thead><tr><th>Day</th><th>8:30 - 9:20</th><th>9:20 - 10:10</th><th>10:10 - 11:00</th><th>11:00 - 11:50</th><th>11:50 - 12:40</th><th>12:40 - 13:30</th><th>13:30 - 14:20</th><th>14:20 - 15:10</th><th>15:10 - 16:00</th></tr></thead>";
 	$days = $queries->getDaysAll($conn);
