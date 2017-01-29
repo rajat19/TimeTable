@@ -6,8 +6,8 @@ include '../functions.php';
 $queries = new Queries();
 $functions = new Functions();
 
-$lab_id = htmlentities($_GET['lab_id']);
-$day = htmlentities($_GET['day']);
+$lab_id = htmlentities($_POST['lab_id']);
+$day = htmlentities($_POST['day']);
 if($day != 'all') {
 	$facdata = array();
 	$schedule = $queries->getTimetableByLabDay($conn, $lab_id, $day);
