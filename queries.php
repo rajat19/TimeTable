@@ -181,6 +181,12 @@ class Queries {
 		return $q;
 	}
 
+	public function getSubjectByFacultyClass($conn, $faculty_id, $class_id) {
+		$ct = 1;
+		$q = $conn->query("SELECT * FROM subjects WHERE subject_id IN (SELECT subject_id FROM timetables WHERE faculty_id='".mysqli_real_escape_string($conn, $faculty_id)."' AND class_id='".mysqli_real_escape_string($conn, $class_id)."' AND class_type='$ct')");
+		return $q;
+	}
+
 	public function getSubstitutionById($conn, $id) {
 		$q = $conn->query("SELECT * FROM substitutions WHERE id='$id'");
 		return $q;

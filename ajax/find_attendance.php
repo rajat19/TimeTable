@@ -10,10 +10,14 @@ $faculty_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'
 $type = htmlentities($_POST['type']);
 $today = $functions->currentDateYmd();
 $time = $functions->currentTime();
+$timelimit = $queries->getSettingByType($conn, 'timelimit')->fetch_assoc();
 $day = $functions->calculateDayOfWeek($today);
 
 $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
-if($type == 1) {
+if($timelimit['value']<$time) {
+	echo "<script>swal('Attendance Not Marked', 'Exceeded the time to mark attendance', 'warning');</script>";
+}
+else if($type == 1) {
 	if($cm) {
 		echo '<button class="btn waves-effect waves-light red lighten-1" id="markfaculty" name="action">Mark Today\'s Attendance</button>';
 	}

@@ -13,7 +13,7 @@
 			            </div>
 
 			        </div>
-			        <div class="center blue-grey lighten-3">
+			        <div class="center">
 			        	<img src="images/akgec.png" class="avatar">
 			        </div>
 			    </div>

@@ -10,7 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="css/materialize.clockpicker.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 </head>
-<body >
+<body class="blue-grey lighten-3">
 	<?php require 'include/connect.inc.php'; ?>
 	<?php include "phpjs/firepjs.php"; ?>
 	<?php
@@ -144,9 +144,7 @@
 				}
 				if($g_usertype == 2) {
 					// cr
-					echo '<li><a href="schedule.php">Today\'s Schedule</a></li>';
-  					echo '<li><a href="report.php">Notify Admin</a></li>';
-  					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
+
 				}
 				echo '<li><a href="notification.php">Notifications</a></li>';
 				echo '<li><a href="logout.php">Logout</li>';

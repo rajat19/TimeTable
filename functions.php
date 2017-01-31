@@ -93,6 +93,12 @@ class Functions {
 		return "$d $mon, $y";
 	}
 
+	public function prettySlotFormat($conn, $queries, $slot_id) {
+		$s = $queries->getSlotById($conn, $slot_id)->fetch_assoc();
+		$slot = $this->prettyTimeFormat($s['start'])." to ".$this->prettyTimeFormat($s['end']);
+		return $slot;
+	}
+
 	public function prettyTimeFormat($time) {
 		$hms = explode(':', $time);
 		$h = ""; $ap = ""; $ih = (int)$hms[0];
