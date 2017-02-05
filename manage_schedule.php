@@ -38,10 +38,10 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 			if($class_type==1)
 				echo "<input type='hidden' name='class_id' value='$class_id'>";
 			if($alreadyassigned->num_rows > 0) {
-				echo"</form><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></td></tr>";
+				echo"</form><span id='xx$i'><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></span></td></tr>";
 			}
 			else {
-				echo"</form><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></td></tr>";	
+				echo"</form><span id='xx$i'><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></span></td></tr>";	
 			}
 			if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
 			if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
@@ -86,6 +86,7 @@ else {
 	function assignFaculty(date, day, slot_id, class_id, lab_id, faculty_id, subject_id, class_type, replacement_id, btni, btnj) {
 		console.log(date+" "+day+" "+slot_id+" "+class_id+" "+lab_id+" "+faculty_id+" "+subject_id+" "+class_type+" "+replacement_id);
 		var btnid = 'asg-'+btni+'-'+btnj;
+		var xxbtn = 'xx'+btni;
 		$.post("ajax/assign_substitution.php", {
 			date: date,
 			day: day,
@@ -99,9 +100,10 @@ else {
 		},
 		function(response, status) {
 			var data = JSON.parse(response);
-			// console.log(response);
-			// console.log(data[0]+"\n"+data[1]+"\n"+data[2]);
 			swal(data[0], data[1], data[2]);
+			if(data[3]==1) {
+				$('#'+xxbtn).html("<a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal"+btni+"'>Reassign</a>");
+			}
 		});
 	}
 </script>

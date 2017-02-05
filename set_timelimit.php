@@ -12,14 +12,14 @@
 									<div class="input-field col s12">
 										<label for="timer">Time limit: </label>
 										<input id="timer" class="timepicker" type="time">
-										<p>Earlier Time limit: <?php echo $queries->getSettingByType($conn, 'timelimit')->fetch_assoc()['value']; ?></p>
+										<span id="current_limit"><p>Current Time limit: <?php echo $queries->getSettingByType($conn, 'timelimit')->fetch_assoc()['value']; ?></p></span>
 									</div>
 								</div>
 							</form>
 							<div class="row">
 						    	<div class="input-field col s12">
 						    		<button class="btn waves-effect waves-light blue-grey lighten-1" id="set" name="action">Set
-										<span><i class="fa fa-send"></i></span>
+										<span><i class="fa fa-clock-o"></i></span>
 									</button>
 						    	</div>
 						    </div>
@@ -42,6 +42,9 @@
 			console.log(response);
 			var data = JSON.parse(response);
 			swal(data[0], data[1], data[2]);
+			if(data[3]==1) {
+				$('#current_limit').html("<p>Current Time limit: "+data[4]+"</p>");
+			}
 		});
 	});
 </script>

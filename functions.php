@@ -349,13 +349,14 @@ class Functions {
 		$all = array();
 		if($q->num_rows > 0) {
 			while($row = $q->fetch_assoc()) {
+				$id = $row['id'];
 				$details = $row['details'];
 				$notif_type = $row['notification_type'];
 				$notif_date = $this->prettyDateFormat($row['date']);
 				$notif_time = $this->prettyTimeFormat($row['time']);
 				$notified_by = $queries->getUserById($conn, $row['notified_by'])->fetch_assoc()['name'];
 				$string = $this->getNotification($notif_type, $details);
-				$arr = array($notified_by, $notif_date, $notif_time, $string);
+				$arr = array($notified_by, $notif_date, $notif_time, $string, $id);
 				$all[] = $arr;
 			}
 		}
@@ -539,9 +540,6 @@ class Functions {
 			}
 		}
 
-		if ($page<($tpages - $adjacents)) {
-			$out.= "<a href=\"" . $reload."&page=".$tpages."\">" .$tpages."</a>\n";
-		}
 		// next
 		if ($page <= $tpages) {
 			if($page==$tpages) $page = $page-1;

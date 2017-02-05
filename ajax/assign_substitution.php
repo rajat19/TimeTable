@@ -28,6 +28,7 @@ if(!$sf) {
 	$arr[] = "Error";
 	$arr[] = $msg;
 	$arr[] = "warning";
+	$arr[] = 0;
 	echo json_encode($arr);
 }
 else {
@@ -35,9 +36,10 @@ else {
 	if($q==1) {
 		$functions->setNotificationB1($conn, $queries, $faculty_id, $replacement_id, $class_id, $lab_id, $slot_id, $date);
 		$arr = array();
-		$arr[0] = "Substitution assigned";
-		$arr[1] = "";
-		$arr[2] = "success";
+		$arr[] = "Substitution assigned";
+		$arr[] = "";
+		$arr[] = "success";
+		$arr[] = 1;
 		echo json_encode($arr);	
 	}
 }

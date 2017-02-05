@@ -46,6 +46,7 @@
 										break;
 									}
 									$notif = $x[$i];
+									$q = $queries->updateNotificationRead($conn, $notif[4]);
 			            			echo '<li class="avatar collection-item">';
 			            			echo '<a class="link-grey" href="#!">';
 			            			echo '<img src="images/akgec.png" class="circle">

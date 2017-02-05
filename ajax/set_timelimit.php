@@ -16,6 +16,8 @@ if($update_timelimit==1) {
 	$arr[0] = "";
 	$arr[1] = "Attendance Time Limit Updated";
 	$arr[2] = "success";
+	$arr[3] = 1;
+	$arr[4] = $timelimit;
 	echo json_encode($arr);
 }
 else {
@@ -23,6 +25,7 @@ else {
 	$arr[0] = "Error";
 	$arr[1] = "Unable to update timelimit";
 	$arr[2] = "warning";
+	$arr[3] = 0;
 	echo json_encode($arr);
 }
 ?>

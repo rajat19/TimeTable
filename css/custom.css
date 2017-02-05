@@ -1,3 +1,9 @@
+.backcover {
+	background-image: url('../images/bg.jpg') !important;
+	background-size: cover;
+	/*background-position: center;*/
+}
+
 .likelabel {
 	left: 0.75rem;
 	top: -14px;

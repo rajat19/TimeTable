@@ -156,6 +156,12 @@ class Queries {
 		return $q;
 	}
 
+	public function getNotificationsUnreadByUser($conn, $user_id) {
+		$not = 0;
+		$q = $conn->query("SELECT id FROM notifications WHERE user_id='$user_id' AND notifications.read='$not'");
+		return $q;
+	}
+
 	public function getSettingByType($conn, $type) {
 		$q = $conn->query("SELECT * FROM settings WHERE type='$type'");
 		return $q;
@@ -365,6 +371,12 @@ class Queries {
 		return $q;
 	}
 
+	public function updateNotificationRead($conn, $notif_id) {
+		$read = 1;
+		$q = $conn->query("UPDATE notifications SET notifications.read='$read' WHERE id='$notif_id'");
+		return $q;
+	}
+
 	public function updateSetting($conn, $type, $value) {
 		$q = $conn->query("UPDATE settings SET value='".mysqli_real_escape_string($conn, $value)."' WHERE type='$type'");
 		return $q;
@@ -379,6 +391,11 @@ class Queries {
 		$q = $conn->query("UPDATE users SET last_visit='$dt' WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
 		return $q;
 	}
+
+	public function updateUserFullName($conn, $user_id, $name) {
+		$q = $conn->query("UPDATE users SET name='".mysqli_real_escape_string($conn, $name)."' WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
+		return $q;
+	}	
 
 	public function updateUserPassword($conn, $user_id, $new_pass) {
 		$q = $conn->query("UPDATE users SET password='$new_pass' WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");

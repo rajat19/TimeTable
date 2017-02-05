@@ -9,8 +9,16 @@
 	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
 	<link rel="stylesheet" type="text/css" href="css/materialize.clockpicker.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
+	<link rel="stylesheet" type="text/css" href="css/preloader.css">
 </head>
-<body >
+<?php 
+	if(isset($global_bg) && $global_bg==1) {
+		echo "<body class='backcover'>";
+	}
+	else {
+		echo "<body>";		
+	}
+?>
 	<?php require 'include/connect.inc.php'; ?>
 	<?php include "phpjs/firepjs.php"; ?>
 	<?php
@@ -61,7 +69,7 @@
 			<li class="divider"></li>
 			<li><a href="add_faculties.php">Add Faculties</a></li>
 			<li class="divider"></li>
-			<li><a href="add_cr.php">Add Class Representatives</a></li>
+			<li><a href="edit_cr.php">Change Class Representatives</a></li>
 			<li class="divider"></li>
 			<li><a href="set_timelimit.php">Set Time Limit</a></li>
 			<li class="divider"></li>
@@ -109,7 +117,7 @@
 				<li class="divider"></li>
 				<li><a href="add_faculties.php">Add Faculties</a></li>
 				<li class="divider"></li>
-				<li><a href="add_cr.php">Add Class Representatives</a></li>
+				<li><a href="edit_cr.php">Change Class Representatives</a></li>
 				<li class="divider"></li>
 				<li><a href="set_timelimit.php">Set Time Limit</a></li>
 				<li class="divider"></li>
@@ -148,7 +156,10 @@
   					echo '<li><a href="report.php">Notify Admin</a></li>';
   					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
 				}
-				echo '<li><a href="notification.php">Notifications</a></li>';
+				$q = $queries->getNotificationsUnreadByUser($conn, $g_userid)->num_rows;
+  				echo '<li><a href="notification.php">Notifications $q';
+  				if($q>0) echo '<span class="new badge red">3</span>';
+  				echo'</a></li>';
 				echo '<li><a href="logout.php">Logout</li>';
 			}
 	        ?>
@@ -186,7 +197,11 @@
 		      					echo '<li><a href="report.php">Notify Admin</a></li>';
 		      					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
 		      				}
-		      				echo '<li><a href="notification.php">Notifications</a></li>';
+		      				$q = $queries->getNotificationsUnreadByUser($conn, $g_userid)->num_rows;
+		      				echo "<script>console.log('sdasda $q $g_userid')</script>";
+		      				echo '<li><a href="notification.php">Notifications';
+		      				if($q>0) echo "<span class='new badge red'>$q</span>";
+		      				echo'</a></li>';
 		      				echo '<li><a href="logout.php">Logout</a></li>';
 		      			}
 		      		?>
