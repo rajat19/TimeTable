@@ -1,6 +1,7 @@
 <?php $access = array(1); ?>
 <?php
 include 'include/header.inc.php';
+$count = array();
 $replacement_id = $queries->getFacultyByUserId($conn, $g_userid)->fetch_assoc()['id'];
 $date = $functions->currentDateYmd();
 $getSubstitution = $queries->getSubstitutionByReplacementAfterDate($conn, $replacement_id, $date);
@@ -10,6 +11,7 @@ if($getSubstitution->num_rows > 0){
 	echo "<thead><tr><th>Class</th><th>Location</th><th>Date (Day)</th><th>Time Slot</th><th>Faculty Name</th><th>Accept/Reject</th></tr></thead>";
 	while($row = $getSubstitution->fetch_assoc()) {
 		$sub_id = $row['id'];
+		$count[] = $sub_id;
 		$date = $functions->prettyDateFormat($row['date']);
 		$day = $functions->capitalize($row['day']);
 		$class_type = $row['class_type'];
@@ -30,7 +32,7 @@ if($getSubstitution->num_rows > 0){
 		$slot = $functions->prettyTimeFormat($s['start'])." to ".$functions->prettyTimeFormat($s['end']);
 		echo "<tr><td>$class</td><td>$location</td><td>$date ($day) </td><td>$slot</td><td>$facname</td>";
 		if($accepted==0) {
-			echo "<td id='x-$sub_id'><button id='accept-$sub_id' onclick='accept($sub_id);' class='btn-floating waves-effect waves-light green lighten-1'><span><i class='fa fa-check'></i></span></button><button id='reject-$sub_id' onclick='reject($sub_id);' class='btn-floating waves-effect waves-light red lighten-1'><span><i class='fa fa-times'></i></span></button></td></tr>";
+			echo "<td id='x-$sub_id'><button id='accept-$sub_id' onclick='accept($sub_id);' class='btn-floating waves-effect waves-light green lighten-1'><span><i class='fa fa-check'></i></span></button><button data-target='modal-$sub_id' class='btn-floating waves-effect waves-light red lighten-1 modal-trigger'><span><i class='fa fa-times'></i></span></button></td></tr>";
 		}
 		else {
 			$granted = ($accepted==1)?'Accepted':'Rejected';
@@ -39,6 +41,21 @@ if($getSubstitution->num_rows > 0){
 	}
 	echo "</table>";
 	echo "</div></div></div></section></div>";
+	foreach ($count as $k => $sub_id) {
+		echo"<div id='modal-$sub_id' class='modal bottom-sheet' style='z-index: 1003; display: block; min-height:50%'>
+		    <div class='modal-content'>
+		    <h4>Reason for rejection</h4>";
+		echo "	<div class='input-field col s12'>
+					<textarea id='text$sub_id' class='materialize-textarea'></textarea>
+					<label>Summarise your Reason</label>
+				</div>
+				<div>
+					<button id='reject-$sub_id' onclick='reject($sub_id);' class='btn waves-effect waves-light red lighten-1'>Submit Reason</button>
+
+				</div>";
+		echo"</div>
+			</div>";
+	}
 }
 
 $getSubstitution = $queries->getSubstitutionByReplacementBeforeDate($conn, $replacement_id, $date);
@@ -87,13 +104,19 @@ include 'include/footer.inc.php';
 		});
 	}
 
-	function reject(lid) {
+	function reject(sid) {
 		var a = -1;
+		var reason = $('#text'+sid).val();
+		if(reason=='') {
+			Materialize.toast('Enter some reason for rejection', 3000, 'rounded');
+		}
 		$.post("ajax/accept_sub.php", {
 			sub_id: sid,
-			a: a
+			a: a,
+			reason: reason
 		},
 		function (response, status) {
+			$('#modal-'+sid).modal('close');
 			$('#x-'+sid).html(response);
 		});
 	}

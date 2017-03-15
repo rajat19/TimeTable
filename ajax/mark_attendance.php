@@ -12,9 +12,16 @@ $today = $functions->currentDateYmd();
 $time = $functions->currentTime();
 $day = $functions->calculateDayOfWeek($today);
 $timelimit = $queries->getSettingByType($conn, 'timelimit')->fetch_assoc();
-$mintime = "08:30:00";
+$mintime = "08:00:00";
 $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
-if($timelimit['value']<$time || $time<$mintime) {
+if($time<$mintime) {
+	$arr = array();
+	$arr[0] = "Attendance Not Marked";
+	$arr[1] = "It is too soon to mark attendance, Wait till 8:00 AM";
+	$arr[2] = "warning";
+	echo json_encode($arr);
+}
+else if($timelimit['value']<$time) {
 		$arr = array();
 		$arr[0] = "Attendance Not Marked";
 		$arr[1] = "Cannot Mark Attendance at this time";

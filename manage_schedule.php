@@ -7,6 +7,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 	$date = htmlentities($_POST['date']);
 	$day = $functions->calculateDayOfWeek($date);
 	$Day = $functions->capitalize($day);
+	$currentTime = $functions->currentTime();
 	$fdate = $functions->prettyDateFormat($date);
 	$details = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
 	$faculty_name = $details['name'];
@@ -15,6 +16,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 	$slots = $queries->getSlotsAll($conn);
 	while($r = $slots->fetch_assoc()) {
 		$slot[(int)$r['id']] = $functions->prettyTimeFormat($r['start'])." to ".$functions->prettyTimeFormat($r['end']);
+		$maxtime[(int)$r['id']] = $r['end'];
 	}
 	echo "<div class='container'><section style='margin:10px;'><div class='col s12 m8 offset-m2'><div class='card z-depth-3 blue-grey lighten-4'><div class='card-content'><span class='card-title'>$faculty_name (Day: $Day $fdate)</span>";
 	$i = 1;
@@ -37,23 +39,35 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 			echo "<td><form><input type='hidden' name='day' value='$day'><input type='hidden' name='slot_id' value='$slot_id'><input type='hidden' name='class_type' value='$class_type'>";
 			if($class_type==1)
 				echo "<input type='hidden' name='class_id' value='$class_id'>";
+			echo "</form>";
 			if($alreadyassigned->num_rows > 0) {
-				echo"</form><span id='xx$i'><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></span></td></tr>";
+				echo"<span id='xx$i'><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></span>";
 			}
 			else {
-				echo"</form><span id='xx$i'><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></span></td></tr>";	
+				if($maxtime[$i] < $currentTime) {
+					echo "<button class='btn waves-effect waves-light blue-grey lighten-1' onclick='cannotManage();'>Manage</button>";
+				}
+				else {
+					echo"<span id='xx$i'><a class='btn waves-effect waves-light blue-grey lighten-1 modal-trigger' href='#modal$i'>Manage</a></span>";		
+				}
 			}
-			if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
-			if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
-			$facs = $functions->prioritizeFaculties($conn, $queries, $facs, $day, $slot_id);
-			// $duration = "Day: $Day $today($slot[$i])";
-			$final = array();
-			foreach($facs as $v) {
-				$lf = ($v[5]==0)?'-':$slot[$v[5]];
-				$nf = ($v[6]==10)?'-':$slot[$v[6]];
-				$final[] = array($v[1], $v[0], $v[2], $v[3], $v[4], $lf, $nf);
+			echo "</td></tr>";
+			if($maxtime[$i] >= $currentTime) {
+				if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
+				if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
+				$facs = $functions->prioritizeFaculties($conn, $queries, $facs, $day, $slot_id);
+				// $duration = "Day: $Day $today($slot[$i])";
+				$final = array();
+				foreach($facs as $v) {
+					$lf = ($v[5]==0)?'-':$slot[$v[5]];
+					$nf = ($v[6]==10)?'-':$slot[$v[6]];
+					$final[] = array($v[1], $v[0], $v[2], $v[3], $v[4], $lf, $nf);
+				}
+				$w[$i] = array($final, $slot[$slot_id], $subject_id, $class_type, $slot_id, $class_id, $lab_id);
 			}
-			$w[$i] = array($final, $slot[$slot_id], $subject_id, $class_type, $slot_id, $class_id, $lab_id);
+			else {
+				$w[$i] = array();
+			}
 			$i++;
 		}
 		echo "</table>";
@@ -83,6 +97,10 @@ else {
 ?>
 <?php include 'include/footer.inc.php'; ?>
 <script type="text/javascript">
+	function cannotManage() {
+		Materialize.toast('Time already passed', 3000, 'rounded')
+	}
+
 	function assignFaculty(date, day, slot_id, class_id, lab_id, faculty_id, subject_id, class_type, replacement_id, btni, btnj) {
 		console.log(date+" "+day+" "+slot_id+" "+class_id+" "+lab_id+" "+faculty_id+" "+subject_id+" "+class_type+" "+replacement_id);
 		var btnid = 'asg-'+btni+'-'+btnj;

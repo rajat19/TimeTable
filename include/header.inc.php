@@ -10,13 +10,15 @@
 	<link rel="stylesheet" type="text/css" href="css/materialize.clockpicker.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="css/preloader.css">
+	<link rel="stylesheet" type="text/css" href="css/scroller.css">
+	<link rel="manifest" href="manifest.json">
 </head>
 <?php 
 	if(isset($global_bg) && $global_bg==1) {
 		echo "<body class='backcover'>";
 	}
 	else {
-		echo "<body>";		
+		echo "<body class='scrollbar' id='style-13'>";		
 	}
 ?>
 	<?php require 'include/connect.inc.php'; ?>
@@ -77,8 +79,8 @@
 			<li class="divider"></li>
 			<li><a href="delete_faculties.php">Delete Faculties</a></li>
 			<li class="divider"></li> -->
-			<li><a href="send_message.php">Send Messages</a></li>
-			<li class="divider"></li>
+			<!-- <li><a href="send_message.php">Send Messages</a></li>
+			<li class="divider"></li> -->
 			<li><a href="ip_track.php">Track Visitors</a></li>
 		</ul>
      	<?php } ?>
@@ -125,8 +127,8 @@
 				<li class="divider"></li>
 				<li><a href="delete_faculties.php">Delete Faculties</a></li>
 				<li class="divider"></li> -->
-				<li><a href="send_message.php">Send Messages</a></li>
-				<li class="divider"></li>
+				<!-- <li><a href="send_message.php">Send Messages</a></li>
+				<li class="divider"></li> -->
 				<li><a href="ip_track.php">Track Visitors</a></li>
 			</ul>
 			<?php } ?>
@@ -146,7 +148,7 @@
 					// faculty
   					echo '<li><a href="mark_leave.php">Mark Leave</a></li>';
   					echo '<li><a href="faculty_leave.php">View Leaves</a></li>';
-  					echo '<li><a href="request_substitution.php">Request Substitution</a></li>';
+  					// echo '<li><a href="request_substitution.php">Request Substitution</a></li>';
   					echo '<li><a href="change_password.php">Change Password</a></li>';
   					echo '<li><a href="faculty_timetable.php">View Timetable</a></li>';					
 				}
@@ -157,8 +159,8 @@
   					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
 				}
 				$q = $queries->getNotificationsUnreadByUser($conn, $g_userid)->num_rows;
-  				echo '<li><a href="notification.php">Notifications $q';
-  				if($q>0) echo '<span class="new badge red">3</span>';
+  				echo '<li><a href="notification.php">Notifications';
+  				if($q>0) echo "<span class='new badge red'>$q</span>";
   				echo'</a></li>';
 				echo '<li><a href="logout.php">Logout</li>';
 			}
@@ -187,7 +189,7 @@
 		      				if($g_usertype == 1) {
 		      					echo '<li><a href="mark_leave.php">Mark Leave</a></li>';
 		      					echo '<li><a href="faculty_leave.php">View Leaves</a></li>';
-		      					echo '<li><a href="request_substitution.php">Request Substitution</a></li>';
+		      					// echo '<li><a href="request_substitution.php">Request Substitution</a></li>';
 		      					echo '<li><a href="change_password.php">Change Password</a></li>';
 		      					echo '<li><a href="faculty_timetable.php">View Timetable</a></li>';
 		      				}
@@ -198,7 +200,7 @@
 		      					echo '<li><a href="class_timetable.php">View Timetable</a></li>';
 		      				}
 		      				$q = $queries->getNotificationsUnreadByUser($conn, $g_userid)->num_rows;
-		      				echo "<script>console.log('sdasda $q $g_userid')</script>";
+		      				
 		      				echo '<li><a href="notification.php">Notifications';
 		      				if($q>0) echo "<span class='new badge red'>$q</span>";
 		      				echo'</a></li>';

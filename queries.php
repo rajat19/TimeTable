@@ -382,8 +382,8 @@ class Queries {
 		return $q;
 	}
 
-	public function updateSubstitution($conn, $substitution_id, $a) {
-		$q = $conn->query("UPDATE substitutions SET accepted='$a' WHERE id='$substitution_id'");
+	public function updateSubstitution($conn, $substitution_id, $a, $reason) {
+		$q = $conn->query("UPDATE substitutions SET accepted='$a', reason='".mysqli_real_escape_string($conn, $reason)."' WHERE id='$substitution_id'");
 		return $q;
 	}
 

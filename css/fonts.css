@@ -2,7 +2,25 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: local('Material Icons'), local('MaterialIcons-Regular'), url(../fonts/material.woff2) format('woff2');
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'), 
+       url(../fonts/material.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: Exo;
+  src: local("Exo Regular"),
+       local("Exo-Regular"),
+       url(../fonts/Exo-Regular.ttf);
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Pangolin;
+  src: local("Pangolin Regular"),
+       local("Pangolin-Regular"),
+       url(../fonts/Pangolin-Regular.ttf);
+  font-weight: bold;
 }
 
 .material-icons {

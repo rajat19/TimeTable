@@ -152,10 +152,14 @@ class Functions {
 		return true;	
 	}
 
-	public function checkSubstitutionFree($conn, $queries, $replacement_id, $date, $slot_id) {
-		$q = $queries->getSubstitutionByFacultyDateSlot($conn, $replacement_id, $date, $slot_id);
+	public function checkSubstitutionFree($conn, $queries, $faculty_id, $date, $slot_id) {
+		$q = $queries->getSubstitutionByFacultyDateSlot($conn, $faculty_id, $date, $slot_id);
 		$count = $q->num_rows;
-		if($count > 0) return false;
+		if($count > 0) {
+			$a = $q->fetch_assoc()['accepted'];
+			if($a==-1) return true;
+			return false;
+		}
 		return true;	
 	}
 
@@ -380,6 +384,9 @@ class Functions {
 			case 4:
 				$x = ($arr[1]==1)?"accepted":"rejected";
 				$s = "$arr[0] had $x substitution given for $arr[2] during $arr[3] for replacing $arr[4]";
+				if($arr[1]==-1) {
+					$s .= "<br>Reason: $arr[5]";
+				}
 				break;
 			case 5:
 				$today = $this->currentDateYmd();
@@ -453,9 +460,10 @@ class Functions {
 		$class = $c[0]." in ".$location;
 		$admin = $queries->getAdmin($conn)->fetch_assoc()['id'];
 		$accepted = $sub['accepted'];
+		$reason = $sub['reason'];
 		$s = $queries->getSlotById($conn, $sub['slot_id'])->fetch_assoc();
 		$slot = $this->prettyTimeFormat($s['start'])." to ".$this->prettyTimeFormat($s['end']);
-		$string = implode('$$', array($repname, $accepted, $class, $slot, $facname));
+		$string = implode('$$', array($repname, $accepted, $class, $slot, $facname, $reason));
 		$this->createNotification($conn, $queries, 4, 0, $admin, $faculty_id, $string);
 	}
 

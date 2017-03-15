@@ -14,13 +14,8 @@
 			            <div class="card-content white-text center">
 			            	<h1>Welcome</h1>
 			            	<h4>Time Table Management System</h4>
-			            	
 			            </div>
-
 			        </div>
-<!-- 			        <div class="center">
-			        	<img src="images/akgec.png" class="avatar">
-			        </div> -->
 			    </div>
 			</div>
 		</section>

@@ -1,0 +1,15 @@
+{
+  "short_name": "Timetable",
+  "name": "Timetable Management System",
+  "icons": [
+    {
+      "src": "../images/akgec.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    }
+  ],
+  "background_color": "#2196F3",
+  "start_url": "index.php",
+  "display": "browser",
+  "gcm_sender_id": "103953800507",
+}
