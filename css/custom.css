@@ -1,12 +1,21 @@
 body{
   font-family: 'Pangolin', cursive !important;
 }
-.backcover {
-	background-image: url('../images/bg.jpg') !important;
-	background-size: cover;
-	/*background-position: center;*/
+@media only screen and (min-width: 600px) {
+	.backcover {
+		background-image: url('../images/bg.jpg') !important;
+		background-size: cover;
+		/*background-position: center;*/
+	}
+	.phonecover {
+		display: none;
+	}
 }
-
+@media only screen and (max-width: 600px) {
+	.backcover {
+		background-color: #ededed;
+	}
+}
 .likelabel {
 	left: 0.75rem;
 	top: -14px;
@@ -57,4 +66,14 @@ body{
 
 .side-nav a {
 	color: white !important;
+}
+
+.collection .collection-item.avatar .imgsqr {
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
 }

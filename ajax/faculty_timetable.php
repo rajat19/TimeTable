@@ -73,7 +73,11 @@ if($faculty_id == $f_id) {
 			echo "</div></div></div></section>";
 		}
 		else {
-			echo "No data was found for the faculty $faculty_id";
+			echo "<div class='row'>
+					<div class='col s12 m6 offset-m3 center card red white-text z-depth-3'>
+						<h4>No class assigned for $day</h4>
+					</div>
+				</div>";
 		}
 	}
 

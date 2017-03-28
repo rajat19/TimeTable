@@ -2,6 +2,7 @@
 <?php $global_bg = 1; ?>
 <?php session_start(); if(isset($_SESSION['id'])) header('Location:home.php'); ?>
 <?php include 'include/header.inc.php'; ?>
+<?php include "phpjs/firepjs.php"; ?>
 <!-- preloader -->
 <div class="spinner-wrapper">
     <div class="spinner2"></div>
@@ -17,6 +18,9 @@
 			            </div>
 			        </div>
 			    </div>
+			</div>
+			<div class="row phonecover center">
+				<img src="images/bg.jpg" width="100%">
 			</div>
 		</section>
 	</div>

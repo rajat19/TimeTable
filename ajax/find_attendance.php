@@ -16,7 +16,9 @@ $day = $functions->calculateDayOfWeek($today);
 
 $cm = $functions->checkAttendanceMarked($conn, $queries, $faculty_id, $today);
 if($timelimit['value']<$time) {
-	echo "<script>swal('Attendance Not Marked', 'Exceeded the time to mark attendance', 'warning');</script>";
+	// echo "<script>swal('Attendance Not Marked', 'Exceeded the time to mark attendance', 'warning');</script>";
+	echo "<script>Materialize.toast('Attendance can not be marked now', 3000, 'rounded')</script>";
+	echo '<button class="btn disabled" >Mark Today\'s Attendance</button>';
 }
 else if($time < $mintime) {
 	echo '<button class="btn disabled" >Mark Today\'s Attendance</button>';

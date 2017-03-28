@@ -3,6 +3,9 @@
 <head>
 	<title>Time Table Handler</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content="Timetable Management System for College">
+    <meta name="author" content="Rajat Srivastava">
+    <link rel="icon" type="image/png" href="images/akgec.png" />
 	<link rel="stylesheet" type="text/css" href="css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
 	<link rel="stylesheet" type="text/css" href="fontawe/css/font-awesome.min.css">
@@ -12,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="css/preloader.css">
 	<link rel="stylesheet" type="text/css" href="css/scroller.css">
 	<link rel="manifest" href="manifest.json">
+
 </head>
 <?php 
 	if(isset($global_bg) && $global_bg==1) {
@@ -22,7 +26,6 @@
 	}
 ?>
 	<?php require 'include/connect.inc.php'; ?>
-	<?php include "phpjs/firepjs.php"; ?>
 	<?php
 		if($access[0] != 5) {
 			require 'include/session.php';

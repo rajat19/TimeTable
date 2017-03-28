@@ -359,8 +359,9 @@ class Functions {
 				$notif_date = $this->prettyDateFormat($row['date']);
 				$notif_time = $this->prettyTimeFormat($row['time']);
 				$notified_by = $queries->getUserById($conn, $row['notified_by'])->fetch_assoc()['name'];
+				$notified_by_id = $queries->getUserById($conn, $row['notified_by'])->fetch_assoc()['username'];
 				$string = $this->getNotification($notif_type, $details);
-				$arr = array($notified_by, $notif_date, $notif_time, $string, $id);
+				$arr = array($notified_by, $notif_date, $notif_time, $string, $id, $notified_by_id);
 				$all[] = $arr;
 			}
 		}
@@ -559,6 +560,25 @@ class Functions {
 		return $out;
 	}
 /*.Pagination functions*/
-
+	
+/*Ip track functions*/
+	public function displayVisitors($conn, $queries) {
+		$all = array();
+		$q = $queries->getUsersAllOrderByLastVisit($conn);
+		if($q->num_rows > 0) {
+			while($row = $q->fetch_assoc()) {
+				$name = $row['name'];
+				$last_visit = $row['last_visit'];
+				$notified_by_id = $row['username'];
+				if(!empty($last_visit) || $last_visit!=null) {
+					$lv = explode(' ', $last_visit);
+					$date = $this->prettyDateFormat($lv[0]);
+    				$time = $this->prettyTimeFormat($lv[1]);
+        			$all[] = array($name, $date, $time, $notified_by_id);
+				}
+			}
+		}
+		return $all;
+	}
 }
 ?>

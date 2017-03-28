@@ -20,6 +20,10 @@
 				</div>
 			</div>
 			<?php } ?>
+			
+			<div class="row phonecover center">
+				<img src="images/bg.jpg" width="100%">
+			</div>
 		</section>
 	</div>
 <?php include 'include/footer.inc.php'; ?>

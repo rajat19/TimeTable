@@ -5,7 +5,7 @@
 	$x = $functions->displayNotifications($conn, $queries, $g_userid);
 	$total_results = count($x);
 	$total_pages = ceil($total_results / $per_page);
-	if (isset($_GET['page'])) {
+	if (isset($_GET['page']) && !empty($_GET['page'])) {
 		$show_page = $_GET['page']; //current page
 		if ($show_page > 0 && $show_page <= $total_pages) {
 			$start = ($show_page - 1) * $per_page;
@@ -15,7 +15,7 @@
 			$start = 0;
 			$end = $per_page;
 		}
-		$page = intval($_GET['page']);
+		$page = intval($show_page);
 	}
 	else {
 		$start = 0;
@@ -49,8 +49,10 @@
 									$q = $queries->updateNotificationRead($conn, $notif[4]);
 			            			echo '<li class="avatar collection-item">';
 			            			echo '<a class="link-grey" href="#!">';
-			            			echo '<img src="images/akgec.png" class="circle">
-			            			<span class="title">'.$notif[0].'</span>
+			            			if(!empty($notif[5]) && file_exists("images/profile/$notif[5].png"))
+			            				echo "<img src='images/profile/$notif[5].png' class='imgsqr'>";
+			            			else echo '<img src="images/akgec.png" class="circle">'; 
+			            			echo '<span class="title">'.$notif[0].'</span>
 									<p>'.$notif[3].'</p>
 									<p><span class="notif-date">'.$notif[1].' '.$notif[2].'</span></p>';
 			            			echo "</a>";
@@ -62,7 +64,7 @@
 
 			            	echo '<div class="pagination"><ul>';
 							if ($total_pages > 1) {
-								echo $functions->paginate($reload, $show_page, $total_pages);
+								echo $functions->paginate($reload, $page, $total_pages);
 							}
 							echo "</ul></div>";
 			            ?>
