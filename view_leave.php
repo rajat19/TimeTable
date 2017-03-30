@@ -1,7 +1,7 @@
 <?php $access = array(0); ?>
 <?php include 'include/header.inc.php' ?>
 	<form>
-		<input type="hidden" name="date" id="date" value="<?php echo date('Y-m-d', strtotime('+5 hours 30 minutes'));?>">
+		<input type="hidden" name="date" id="date" value="<?php echo $functions->currentDateYmd();?>">
 	</form>
 	<div class="container">
 		<section>

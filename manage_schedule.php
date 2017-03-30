@@ -9,6 +9,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 	$Day = $functions->capitalize($day);
 	$currentTime = $functions->currentTime();
 	$fdate = $functions->prettyDateFormat($date);
+	$currentDate = $functions->currentDate();
 	$details = $queries->getFacultyById($conn, $faculty_id)->fetch_assoc();
 	$faculty_name = $details['name'];
 	$department = $details['department'];
@@ -44,7 +45,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 				echo"<span id='xx$i'><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></span>";
 			}
 			else {
-				if($maxtime[$i] < $currentTime) {
+				if($maxtime[$i] < $currentTime && $currentDate <= $date) {
 					echo "<button class='btn waves-effect waves-light blue-grey lighten-1' onclick='cannotManage();'>Manage</button>";
 				}
 				else {
@@ -52,7 +53,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 				}
 			}
 			echo "</td></tr>";
-			if($maxtime[$i] >= $currentTime) {
+			if($maxtime[$i] >= $currentTime || $currentDate > $date) {
 				if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
 				if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
 				$facs = $functions->prioritizeFaculties($conn, $queries, $facs, $day, $slot_id);
@@ -63,10 +64,10 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 					$nf = ($v[6]==10)?'-':$slot[$v[6]];
 					$final[] = array($v[1], $v[0], $v[2], $v[3], $v[4], $lf, $nf);
 				}
-				$w[$i] = array($final, $slot[$slot_id], $subject_id, $class_type, $slot_id, $class_id, $lab_id);
+				$w[$i] = array($final, $slot[(int)$slot_id], $subject_id, $class_type, $slot_id, $class_id, $lab_id);
 			}
 			else {
-				$w[$i] = array();
+				$w[$i] = array('', '');
 			}
 			$i++;
 		}

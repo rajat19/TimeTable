@@ -47,6 +47,7 @@ class Functions {
 	}
 
 	public function currentDate() {
+		date_default_timezone_set('Asia/Kolkata');
 		return date('d-m-Y');
 	}
 
@@ -149,8 +150,15 @@ class Functions {
 		$q = $queries->getSubstitutionByReplacementDateSlot($conn, $replacement_id, $date, $slot_id);
 		$count = $q->num_rows;
 		if($count > 0) return false;
-		return true;	
+		return true;
 	}
+
+	public function checkFacultyOnLeave($conn, $queries, $faculty_id, $date) {
+		$q = $queries->getLeaveByFacultyDate($conn, $faculty_id, $date);
+		$count = $q->num_rows;
+		if($count > 0) return true;
+		return false;
+	}	
 
 	public function checkSubstitutionFree($conn, $queries, $faculty_id, $date, $slot_id) {
 		$q = $queries->getSubstitutionByFacultyDateSlot($conn, $faculty_id, $date, $slot_id);
@@ -218,7 +226,7 @@ class Functions {
 			$facname = $fac['name'];
 			if($facid != $main) {
 				/*Check if faculty is free from any schedule*/
-				if($this->checkFacultyFree($conn, $queries, $facid, $day, $slot_id) && $this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id)) {
+				if($this->checkFacultyFree($conn, $queries, $facid, $day, $slot_id) && $this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id) && !$this->checkFacultyOnLeave($conn, $queries, $facid, $date)) {
 					$c++;
 					/*0 stands for faculty already being free*/
 					$list[] = $facid;
@@ -249,7 +257,7 @@ class Functions {
 		foreach($allFreeFaculties as $faculty) {
 			$facid = $faculty['id'];
 			if($facid != $main) {
-				if($this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id)) {
+				if($this->checkFacultyFreeFromDuty($conn, $queries, $facid, $date, $slot_id) && !$this->checkFacultyOnLeave($conn, $queries, $facid, $date)) {
 					$list[] = $facid;
 				}
 			}

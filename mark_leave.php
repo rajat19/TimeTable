@@ -13,7 +13,7 @@
 								<div class="row">
 									<div class="input-field col s12">
 										<select name="faculty_id" id="faculty_id">
-										<option value="" disabled selected>Choose Faculty id</option>
+										<option value="" disabled selected>Choose Faculty</option>
 										<?php
 										$res = $queries->getFacultiesByAttendanceNotMarked($conn, $today);
 										if($res->num_rows > 0) {

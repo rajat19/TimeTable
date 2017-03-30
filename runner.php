@@ -1,6 +1,10 @@
-<?php $access = array(0); ?>
+<?php $access = array(5); ?>
+<?php require 'queries.php'; ?>
+<?php require 'functions.php'; ?>
+<?php $queries = new Queries(); ?>
+<?php $functions = new Functions(); ?>
 <?php
-include 'include/header.inc.php';
+// include 'include/header.inc.php';
 $date = $functions->currentDateYmd();
 $ifalreadycounted = $queries->getNotificationByDateType($conn, $date, 2);
 if($ifalreadycounted->num_rows == 0) {

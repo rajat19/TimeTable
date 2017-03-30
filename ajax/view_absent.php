@@ -21,12 +21,14 @@ if($facultiesonleave->num_rows > 0){
 		$facid = $row['faculty_id'];
 		$facname = $row['name'];
 		$dept = $row['department'];
-		$leavefac[] = $facid;
 		$granted = $row['granted'];
 		$ifclasstoday = $queries->getTimetableByFacultyDay($conn, $facid, $day)->num_rows;
 		echo "<tr><td>$facname</td><td>$dept</td>";
 		if($ifclasstoday > 0) {
-			if($granted == 1) echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
+			if($granted == 1) {
+				echo "<td><form action='manage_schedule.php' target='_blank' method='POST'><input type='hidden' name='facid' value='$facid'><input type='hidden' name='date' value='$date'><button type='submit' class='btn waves-effect waves-light blue-grey lighten-1'>Manage</button></form></td>";
+				$leavefac[] = $facid;
+			}
 			else if($granted == 0) echo "<td>Leave Pending</td>";
 			else echo "<td>Leave not Granted</td>";
 			// else echo "<td></td>";
