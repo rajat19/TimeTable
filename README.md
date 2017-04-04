@@ -12,5 +12,6 @@ The complete project is available at [Timetable](http://paradox.eu5.org)
 2. Jquery
 3. HTML/CSS
 4. Materialize CSS
-5. PHP Job Scheduler
-6. [Firebase](https://firebase.google.com)
+5. Mysql Database
+6. PHP Job Scheduler
+7. [Firebase](https://firebase.google.com)

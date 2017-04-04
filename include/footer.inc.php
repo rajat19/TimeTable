@@ -3,7 +3,7 @@
 <script type="text/javascript" src="js/materialize.min.js"></script>
 <script type="text/javascript" src="js/materialize.clockpicker.js"></script>
 <script type="text/javascript" src="js/pagination.min.js"></script>
-<script type="text/javascript" src="js/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/sweetalert2.min.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 
 <!-- Firebase cloud messaging -->

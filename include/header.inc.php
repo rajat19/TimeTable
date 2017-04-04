@@ -9,7 +9,7 @@
 	<link rel="stylesheet" type="text/css" href="css/fonts.css">
 	<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
 	<link rel="stylesheet" type="text/css" href="fontawe/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="css/sweetalert.css">
+	<link rel="stylesheet" type="text/css" href="css/sweetalert2.min.css">
 	<link rel="stylesheet" type="text/css" href="css/materialize.clockpicker.css">
 	<link rel="stylesheet" type="text/css" href="css/custom.css">
 	<link rel="stylesheet" type="text/css" href="css/preloader.css">
@@ -36,6 +36,7 @@
 	?>
 	<?php require 'queries.php'; ?>
 	<?php require 'functions.php'; ?>
+	<?php include "phpjs/firepjs.php"; ?>
 	<?php $queries = new Queries(); ?>
 	<?php $functions = new Functions(); ?>
 	<div class="navbar-fixed">
@@ -72,7 +73,7 @@
 		<ul class="dropdown-content blue-grey darken-3" id="dropdown_user">
 			<li><a href="change_password.php">Change Password</a></li>
 			<li class="divider"></li>
-			<li><a href="add_faculties.php">Add Faculties</a></li>
+			<li><a href="faculties.php">Faculties</a></li>
 			<li class="divider"></li>
 			<li><a href="edit_cr.php">Change Class Representatives</a></li>
 			<li class="divider"></li>
@@ -120,7 +121,7 @@
 			<ul class="dropdown-content blue-grey darken-3" id="dropdown_user">
 				<li><a href="change_password.php">Change Password</a></li>
 				<li class="divider"></li>
-				<li><a href="add_faculties.php">Add Faculties</a></li>
+				<li><a href="faculties.php">Faculties</a></li>
 				<li class="divider"></li>
 				<li><a href="edit_cr.php">Change Class Representatives</a></li>
 				<li class="divider"></li>

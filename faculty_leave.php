@@ -1,7 +1,7 @@
 <?php $access = array(1); ?>
 <?php include 'include/header.inc.php' ?>
 	<form>
-		<input type="hidden" name="date" id="date" value="<?php echo date('Y-m-d', strtotime('+5 hours 30 minutes'));?>">
+		<input type="hidden" name="date" id="date" value="<?php echo $functions->currentDateYmd();?>">
 	</form>
 	<div class="container">
 		<section>
@@ -11,7 +11,7 @@
 					<div class="card-content center">
 						<ul class="tabs blue-grey lighten-5">
 					        <li class="tab col s6 blue-grey lighten-5"><a href="#test1" id="viewpst">Past Leaves</a></li>
-					        <li class="tab col s6 blue-grey lighten-5"><a href="#test4" id="viewfut">Future Leaves</a></li>
+					        <li class="tab col s6 blue-grey lighten-5"><a href="#test4" id="viewfut" class="active">Future Leaves</a></li>
 					    </ul>
 					</div>
 				</div>
@@ -26,7 +26,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		var date = $('#date').val();
-		sendPostRequest(date, 0);
+		sendPostRequest(date, 1);
 	});
 	$('#viewpst').click(function() {
 		var date = $('#date').val();

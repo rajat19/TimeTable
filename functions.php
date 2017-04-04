@@ -533,8 +533,8 @@ class Functions {
 /*Pagination functions*/
 	function paginate($reload, $page, $tpages) {
 		$adjacents = 2;
-		$prevlabel = "&lsaquo; Prev";
-		$nextlabel = "Next &rsaquo;";
+		$prevlabel = "&lsaquo; ";
+		$nextlabel = " &rsaquo;";
 		$out = "";
 		// previous
 		if ($page == 1) {
@@ -547,6 +547,8 @@ class Functions {
 		}
 		$pmin=($page>$adjacents)?($page - $adjacents):1;
 		$pmax=($page<($tpages - $adjacents))?($page + $adjacents):$tpages;
+		if($page != 1)
+			$out.= "<li><a href=\"".$reload."&page=1\">1</a>....\n</li>";
 		for ($i = $pmin; $i <= $pmax; $i++) {
 			if ($i == $page) {
 				$out.= "<li class=\"active\"><a href=''>".$i."</a></li>\n";
@@ -555,6 +557,9 @@ class Functions {
 			} else {
 				$out.= "<li><a href=\"".$reload. "&page=".$i."\">".$i. "</a>\n</li>";
 			}
+		}
+		if($i < $tpages) {
+			$out.= "<li>....<a href=\"".$reload."&page=".($tpages)."\">$tpages</a>\n</li>";
 		}
 
 		// next

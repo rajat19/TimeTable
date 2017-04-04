@@ -60,6 +60,11 @@ class Queries {
 		return $q;
 	}
 
+	public function getDesignationById($conn, $designation_id) {
+		$q = $conn->query("SELECT * FROM designations WHERE id='$designation_id'");
+		return $q;
+	}
+
 	public function getFacultyById($conn, $id) {
 		$q = $conn->query("SELECT * FROM faculties WHERE id='".mysqli_real_escape_string($conn, $id)."'");
 		return $q;
@@ -72,6 +77,11 @@ class Queries {
 
 	public function getFacultiesAll($conn) {
 		$q = $conn->query("SELECT * FROM faculties");
+		return $q;
+	}
+
+	public function getFacultiesAllPriorityOrder($conn) {
+		$q = $conn->query("SELECT * FROM faculties ORDER BY priority");
 		return $q;
 	}
 
@@ -399,6 +409,17 @@ class Queries {
 
 	public function updateUserPassword($conn, $user_id, $new_pass) {
 		$q = $conn->query("UPDATE users SET password='$new_pass' WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
+		return $q;
+	}
+
+	/*Delete queries*/
+	public function deleteFaculty($conn, $user_id) {
+		$q = $conn->query("DELETE FROM faculties WHERE user_id='".mysqli_real_escape_string($conn, $user_id)."'");
+		return $q;
+	}
+
+	public function deleteUser($conn, $user_id) {
+		$q = $conn->query("DELETE FROM users WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
 		return $q;
 	}
 }
