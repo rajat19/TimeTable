@@ -371,6 +371,11 @@ class Queries {
 	}
 
 	/*Update queries*/
+	public function updateFacultyPriority($conn, $user_id, $new) {
+		$q = $conn->query("UPDATE faculties SET priority='$new' WHERE user_id='$user_id'");
+		return $q;
+	}
+
 	public function updateLeaveGrant($conn, $leave_id, $grant_date, $a) {
 		$q = $conn->query("UPDATE faculty_leave SET granted='$a', grant_date='$grant_date' WHERE id='$leave_id'");
 		return $q;

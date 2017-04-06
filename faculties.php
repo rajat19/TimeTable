@@ -64,6 +64,27 @@
 	$('#pf').click(function() {
 		$.get("ajax/assign_priority.php", function(response) {
 			$('#carding').html(response);
+			$('#save').click(function() {
+				var ar = new Array();
+				$("#formprior :input:checked").each(function(){
+				    ar.push($(this));
+				});
+				var json = [];
+				for (var i = 0; i < ar.length; i++) {
+					var x = ar[i].attr('name');
+					var y = ar[i].val();
+					json.push({
+						id: x,
+						new: y
+					});
+				}
+				result = JSON.stringify(json);
+				$.post("ajax/prioritize.php", {
+					data: result
+				}, function(response) {
+					Materialize.toast(response, 3000, 'rounded');
+				});
+			});
 		});
 	});
 
