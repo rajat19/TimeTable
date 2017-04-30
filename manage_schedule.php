@@ -45,7 +45,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 				echo"<span id='xx$i'><a class='btn waves-effect waves-light green lighten-1 modal-trigger' href='#modal$i'>Reassign</a></span>";
 			}
 			else {
-				if($maxtime[$i] < $currentTime && $currentDate <= $date) {
+				if($maxtime[$i] < $currentTime && $currentDate >= $date) {
 					echo "<button class='btn waves-effect waves-light blue-grey lighten-1' onclick='cannotManage();'>Manage</button>";
 				}
 				else {
@@ -53,7 +53,7 @@ if(isset($_POST['facid']) && isset($_POST['date'])) {
 				}
 			}
 			echo "</td></tr>";
-			if($maxtime[$i] >= $currentTime || $currentDate > $date) {
+			if($maxtime[$i] >= $currentTime || $currentDate < $date) {
 				if($class_type==1) $facs = $functions->findFreeFacultiesClass($conn, $queries, $faculty_id, $class_id, $slot_id, $day, $date);
 				if($class_type==0) $facs = $functions->findFreeFacultiesLab($conn, $queries, $faculty_id, $slot_id, $day, $date, $department);
 				$facs = $functions->prioritizeFaculties($conn, $queries, $facs, $day, $slot_id);

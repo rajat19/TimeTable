@@ -423,8 +423,18 @@ class Queries {
 		return $q;
 	}
 
+	public function deleteFacultySubstitutions($conn, $faculty_id) {
+		$q = $conn->query("DELETE FROM substitutions WHERE faculty_id='".mysqli_real_escape_string($conn, $faculty_id)."'");
+		return $q;
+	}
+
 	public function deleteUser($conn, $user_id) {
 		$q = $conn->query("DELETE FROM users WHERE id='".mysqli_real_escape_string($conn, $user_id)."'");
+		return $q;
+	}
+
+	public function deleteUserNotifications($conn, $user_id) {
+		$q = $conn->query("DELETE FROM notifications WHERE user_id='".mysqli_real_escape_string($conn, $user_id)."' OR notified_by='".mysqli_real_escape_string($conn, $user_id)."'");
 		return $q;
 	}
 }

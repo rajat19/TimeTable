@@ -139,8 +139,8 @@
 					$.get("ajax/confirm_del_fac.php", {
 						userid: userid
 					}).done(function(data) {
-						if(data == 'success') resolve()
-						else reject("Error deleting the faculty");
+						if(data == 'success') resolve(data);
+						else reject(data);
 					})
 				})
 			}

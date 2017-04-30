@@ -20,9 +20,6 @@ B1. Substitutions assigned to them
 B2. Status of their leave
 //B3. Another faculty asked for substitution
 
-Student 2
-C1. Substitution assigned in their class
-
 CR 3
 C1. Substitution assigned in their class
 
