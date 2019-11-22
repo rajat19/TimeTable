@@ -1,9 +1,14 @@
 <?php
 
-$dbhost = "localhost";
-$dbname = "timetable";
-$dbuser = "root";
-$dbpass = "";
+// $dbhost = "localhost";
+// $dbname = "timetable";
+// $dbuser = "root";
+// $dbpass = "";
+
+$dbhost = "bpzfwod8heupl6fwmstd-mysql.services.clever-cloud.com";
+$dbname = "bpzfwod8heupl6fwmstd";
+$dbuser = "uu0ejoilugxlifar";
+$dbpass = "NwbnmkBCXN70WDIwjoYh";
 
 // $dbhost = "localhost";
 // $dbname = "1034060";
